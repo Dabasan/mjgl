@@ -8,9 +8,7 @@ import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
-import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.util.AnimatorBase;
 
 /**
@@ -19,28 +17,22 @@ import com.jogamp.opengl.util.AnimatorBase;
  * @author Daba
  *
  */
-public class Window extends WindowBase
-		implements
-			IWindow,
-			GLEventListener,
-			KeyListener,
-			MouseListener {
+public class Window extends WindowBase implements KeyListener, MouseListener {
+	private WindowSettings settings;
 	private GLWindow window;
 
-	public Window(GLCapabilities caps, AnimatorBase animator) {
-		super(caps, animator);
-
-		var settings = new WindowSettings();
-		this.constructorBase(caps, animator, settings);
+	public Window() {
+		this.settings = new WindowSettings();
 	}
-	public Window(WindowSettings settings, GLCapabilities caps, AnimatorBase animator) {
-		super(caps, animator);
-
-		this.constructorBase(caps, animator, settings);
+	public Window(WindowSettings settings) {
+		this.settings = settings;
 	}
-	private void constructorBase(GLCapabilities caps, AnimatorBase animator,
-			WindowSettings settings) {
-		// Create a window.
+
+	protected GLWindow getWindow() {
+		return window;
+	}
+
+	public void embody(GLCapabilities caps, AnimatorBase animator) {
 		window = GLWindow.create(caps);
 		window.setTitle(settings.getTitle());
 		window.setSize(settings.getWindowWidth(), settings.getWindowHeight());
@@ -63,30 +55,6 @@ public class Window extends WindowBase
 		window.setPointerVisible(settings.isPointerVisible());
 		window.setFullscreen(settings.isFullscreen());
 		window.setVisible(settings.isVisible());
-	}
-
-	protected GLWindow getWindow() {
-		return window;
-	}
-
-	@Override
-	public void init(GLAutoDrawable drawable) {
-		this.init();
-	}
-	@Override
-	public void dispose(GLAutoDrawable drawable) {
-		this.dispose();
-	}
-	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-		this.reshape(x, y, width, height);
-	}
-	@Override
-	public void display(GLAutoDrawable drawable) {
-		this.getKeyboard().update();
-		this.getMouse().update();
-		this.update();
-		this.getMouse().resetWheelRotations();
 	}
 
 	@Override

@@ -1,11 +1,14 @@
 package com.github.dabasan.mjgl.app;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.dabasan.mjgl.input.KeyCode;
 import com.github.dabasan.mjgl.input.Keyboard;
 import com.github.dabasan.mjgl.input.Mouse;
 import com.github.dabasan.mjgl.input.MouseCode;
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.util.AnimatorBase;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
 
 /**
  * Base class for windows
@@ -13,26 +16,15 @@ import com.jogamp.opengl.util.AnimatorBase;
  * @author Daba
  *
  */
-public class WindowBase {
-	private GLCapabilities caps;
-	private AnimatorBase animator;
+public class WindowBase implements GLEventListener {
+	private Logger logger = LoggerFactory.getLogger(WindowBase.class);
 
 	private Keyboard keyboard;
 	private Mouse mouse;
 
-	public WindowBase(GLCapabilities caps, AnimatorBase animator) {
-		this.caps = caps;
-		this.animator = animator;
-
+	public WindowBase() {
 		keyboard = new Keyboard();
 		mouse = new Mouse();
-	}
-
-	protected GLCapabilities getGLCapabilities() {
-		return caps;
-	}
-	protected AnimatorBase getAnimator() {
-		return animator;
 	}
 
 	protected Keyboard getKeyboard() {
@@ -53,5 +45,40 @@ public class WindowBase {
 	}
 	public int getMouseCountReleasing(MouseCode code) {
 		return mouse.getCountReleasing(code);
+	}
+
+	@Override
+	public void init(GLAutoDrawable drawable) {
+		this.init();
+		logger.info("Init");
+	}
+	@Override
+	public void dispose(GLAutoDrawable drawable) {
+		this.dispose();
+		logger.info("Dispose");
+	}
+	@Override
+	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		this.reshape(x, y, width, height);
+	}
+	@Override
+	public void display(GLAutoDrawable drawable) {
+		keyboard.update();
+		mouse.update();
+		this.update();
+		mouse.resetWheelRotations();
+	}
+
+	public void init() {
+
+	}
+	public void dispose() {
+
+	}
+	public void reshape(int x, int y, int width, int height) {
+
+	}
+	public void update() {
+
 	}
 }

@@ -25,6 +25,13 @@ public class WindowSettings {
 		fullscreen = false;
 	}
 
+	@Override
+	public String toString() {
+		return "WindowSettings [title=" + title + ", windowWidth=" + windowWidth + ", windowHeight="
+				+ windowHeight + ", exitWhenDestroyed=" + exitWhenDestroyed + ", visible=" + visible
+				+ ", pointerVisible=" + pointerVisible + ", fullscreen=" + fullscreen + "]";
+	}
+
 	public String getTitle() {
 		return title;
 	}

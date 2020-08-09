@@ -18,14 +18,13 @@ import com.jogamp.opengl.util.AnimatorBase;
  *
  */
 public class Window extends WindowBase implements KeyListener, MouseListener {
-	private WindowSettings settings;
 	private GLWindow window;
 
 	public Window() {
-		this.settings = new WindowSettings();
+		super();
 	}
 	public Window(WindowSettings settings) {
-		this.settings = settings;
+		super(settings);
 	}
 
 	protected GLWindow getWindow() {
@@ -33,6 +32,8 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 
 	public void embody(GLCapabilities caps, AnimatorBase animator) {
+		WindowSettings settings = this.getWindowSettings();
+
 		window = GLWindow.create(caps);
 		window.setTitle(settings.getTitle());
 		window.setSize(settings.getWindowWidth(), settings.getWindowHeight());

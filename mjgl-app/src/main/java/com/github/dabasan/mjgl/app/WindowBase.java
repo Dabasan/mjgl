@@ -19,12 +19,26 @@ import com.jogamp.opengl.GLEventListener;
 public class WindowBase implements GLEventListener {
 	private Logger logger = LoggerFactory.getLogger(WindowBase.class);
 
+	private WindowSettings settings;
+
 	private Keyboard keyboard;
 	private Mouse mouse;
 
 	public WindowBase() {
+		settings = new WindowSettings();
+		this.constructorBase();
+	}
+	public WindowBase(WindowSettings settings) {
+		this.settings = settings;
+		this.constructorBase();
+	}
+	private void constructorBase() {
 		keyboard = new Keyboard();
 		mouse = new Mouse();
+	}
+
+	protected WindowSettings getWindowSettings() {
+		return settings;
 	}
 
 	protected Keyboard getKeyboard() {

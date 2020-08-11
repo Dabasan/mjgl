@@ -22,22 +22,26 @@ import com.jogamp.opengl.GLContext;
 public class ShaderProgram {
 	private int programID;
 
+	public ShaderProgram(int programID) {
+		this.programID = programID;
+	}
 	public ShaderProgram(InputStream isVShader, InputStream isFShader) throws IOException {
-		this.constructorBase(isVShader, isFShader);
+		this.readConstructorBase(isVShader, isFShader);
 	}
 	public ShaderProgram(File fileVShader, File fileFShader) throws IOException {
 		try (var fisVShader = new FileInputStream(fileVShader);
 				var fisFShader = new FileInputStream(fileFShader)) {
-			this.constructorBase(fisVShader, fisFShader);
+			this.readConstructorBase(fisVShader, fisFShader);
 		}
 	}
 	public ShaderProgram(String filepathVShader, String filepathFShader) throws IOException {
 		try (var fisVShader = new FileInputStream(filepathVShader);
 				var fisFShader = new FileInputStream(filepathFShader)) {
-			this.constructorBase(fisVShader, fisFShader);
+			this.readConstructorBase(fisVShader, fisFShader);
 		}
 	}
-	private void constructorBase(InputStream isVShader, InputStream isFShader) throws IOException {
+	private void readConstructorBase(InputStream isVShader, InputStream isFShader)
+			throws IOException {
 		programID = ShaderFunctions.createProgram(isVShader, isFShader);
 	}
 
@@ -103,6 +107,32 @@ public class ShaderProgram {
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform4f(location, value0, value1, value2, value3);
+	}
+	// double
+	public void setUniform(String name, double value) {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+
+		int location = gl.glGetUniformLocation(programID, name);
+		gl.glUniform1f(location, (float) value);
+	}
+	public void setUniform(String name, double value0, double value1) {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+
+		int location = gl.glGetUniformLocation(programID, name);
+		gl.glUniform2f(location, (float) value0, (float) value1);
+	}
+	public void setUniform(String name, double value0, double value1, double value2) {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+
+		int location = gl.glGetUniformLocation(programID, name);
+		gl.glUniform3f(location, (float) value0, (float) value1, (float) value2);
+	}
+	public void setUniform(String name, double value0, double value1, double value2,
+			double value3) {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+
+		int location = gl.glGetUniformLocation(programID, name);
+		gl.glUniform4f(location, (float) value0, (float) value1, (float) value2, (float) value3);
 	}
 	// Vector
 	public void setUniform(String name, Vector value) {

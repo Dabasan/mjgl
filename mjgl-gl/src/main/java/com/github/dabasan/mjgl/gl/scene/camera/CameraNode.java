@@ -1,7 +1,7 @@
-package com.github.dabasan.mjgl.gl.renderer.camera;
+package com.github.dabasan.mjgl.gl.scene.camera;
 
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.renderer.Node;
+import com.github.dabasan.mjgl.gl.scene.Node;
 
 /**
  * Base class for cameras

@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.renderer;
+package com.github.dabasan.mjgl.gl.scene;
 
 import java.util.ArrayList;
 import java.util.List;

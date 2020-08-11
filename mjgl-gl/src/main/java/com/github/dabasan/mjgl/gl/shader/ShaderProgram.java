@@ -12,6 +12,7 @@ import com.github.dabasan.mjgl.gl.color.Color;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.util.texture.Texture;
 
 /**
  * Shader program
@@ -163,6 +164,14 @@ public class ShaderProgram {
 	}
 
 	// Texture
+	public void setTexture(String name, int textureUnit, Texture texture) {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+
+		int location = gl.glGetUniformLocation(programID, name);
+		gl.glActiveTexture(GL2ES2.GL_TEXTURE0 + textureUnit);
+		texture.bind(gl);
+		gl.glUniform1i(location, textureUnit);
+	}
 	public void setTexture(String name, int textureUnit, int textureTarget, int textureID) {
 		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
 

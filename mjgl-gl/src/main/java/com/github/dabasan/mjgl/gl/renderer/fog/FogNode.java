@@ -12,12 +12,12 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class Fog extends Node {
+public class FogNode extends Node {
 	private double start;
 	private double end;
 	private Color color;
 
-	public Fog() {
+	public FogNode() {
 		start = 100.0;
 		end = 200.0;
 		color = Color.BLACK;

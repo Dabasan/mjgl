@@ -29,5 +29,11 @@
 			<artifactId>ejml-3dtools</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.dabasan</groupId>
+			<artifactId>mjgl-math</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

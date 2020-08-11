@@ -3,7 +3,7 @@ package com.github.dabasan.mjgl.gl.renderer.lighting;
 import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.color.Color;
+import com.github.dabasan.mjgl.gl.Color;
 import com.github.dabasan.mjgl.gl.renderer.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 

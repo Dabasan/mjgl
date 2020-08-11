@@ -2,7 +2,7 @@ package com.github.dabasan.mjgl.gl.renderer.fog;
 
 import java.util.List;
 
-import com.github.dabasan.mjgl.gl.color.Color;
+import com.github.dabasan.mjgl.gl.Color;
 import com.github.dabasan.mjgl.gl.renderer.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 

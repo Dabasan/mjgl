@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.color;
+package com.github.dabasan.mjgl.gl;
 
 /**
  * Color

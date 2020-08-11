@@ -8,7 +8,7 @@ import java.nio.FloatBuffer;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.color.Color;
+import com.github.dabasan.mjgl.gl.Color;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GLContext;

@@ -36,7 +36,14 @@ public class OrthographicCameraNode extends CameraNode {
 
 		Matrix vp = projection.mult(viewTransformation);
 
-		// Transfer vp to shader programs.
+		for (var program : programs) {
+			program.enable();
+			program.setUniform("camera.near", this.getNear());
+			program.setUniform("camera.far", this.getFar());
+			program.setUniform("camera.position", this.getPosition());
+			program.setUniform("camera.target", this.getTarget());
+			program.setUniform("camera.vp", vp, true);
+		}
 	}
 
 }

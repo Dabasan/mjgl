@@ -45,10 +45,10 @@ public class Node {
 		nodes.remove(node);
 	}
 
-	public void translate(Vector translate) {
-		position = position.add(translate);
+	public void translate(Vector translation) {
+		position = position.add(translation);
 		for (var node : nodes) {
-			node.translate(translate);
+			node.translate(translation);
 		}
 	}
 	public void scale(double scale) {

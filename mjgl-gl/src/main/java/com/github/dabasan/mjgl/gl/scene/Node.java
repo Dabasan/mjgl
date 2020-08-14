@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
  * Node
@@ -32,10 +31,6 @@ public class Node {
 	}
 	public Vector getPosition() {
 		return position;
-	}
-
-	public void update(List<ShaderProgram> programs) {
-
 	}
 
 	public void attachChild(Node node) {

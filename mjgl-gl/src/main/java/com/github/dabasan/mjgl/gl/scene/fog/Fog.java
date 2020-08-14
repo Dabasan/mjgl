@@ -3,7 +3,7 @@ package com.github.dabasan.mjgl.gl.scene.fog;
 import java.util.List;
 
 import com.github.dabasan.mjgl.gl.Color;
-import com.github.dabasan.mjgl.gl.scene.Node;
+import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
@@ -12,7 +12,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class Fog extends Node {
+public class Fog implements IUpdatable {
 	private double start;
 	private double end;
 	private Color color;
@@ -45,8 +45,6 @@ public class Fog extends Node {
 
 	@Override
 	public void update(List<ShaderProgram> programs) {
-		super.update(programs);
-
 		for (var progam : programs) {
 			progam.enable();
 			progam.setUniform("fog.start", start);

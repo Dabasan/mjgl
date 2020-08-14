@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
-import com.github.dabasan.mjgl.gl.scene.Node;
+import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
@@ -13,7 +13,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class Lighting extends Node {
+public class Lighting implements IUpdatable {
 	private Vector direction;
 	private Color colorAmbient;
 	private Color colorDiffuse;

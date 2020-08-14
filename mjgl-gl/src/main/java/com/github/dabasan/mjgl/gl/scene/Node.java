@@ -51,10 +51,12 @@ public class Node {
 			node.translate(translation);
 		}
 	}
-	public void scale(double scale) {
-		position = position.scale(scale);
+	public void rescale(Vector scale) {
+		var mScaling = Matrix.createScalingMatrix(scale.getX(), scale.getY(), scale.getZ());
+
+		position = position.transform(mScaling);
 		for (var node : nodes) {
-			node.scale(scale);
+			node.rescale(scale);
 		}
 	}
 	public void rotX(double th) {
@@ -75,10 +77,10 @@ public class Node {
 			node.rotZ(th);
 		}
 	}
-	public void rot(double axisX, double axisY, double axisZ, double th) {
-		position = position.rot(axisX, axisY, axisZ, th);
+	public void rot(Vector axis, double th) {
+		position = position.rot(axis.getX(), axis.getY(), axis.getZ(), th);
 		for (var node : nodes) {
-			node.rot(axisX, axisY, axisZ, th);
+			node.rot(axis, th);
 		}
 	}
 	public void transform(Matrix m) {

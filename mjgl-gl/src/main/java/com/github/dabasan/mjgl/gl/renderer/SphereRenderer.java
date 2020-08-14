@@ -20,7 +20,7 @@ import com.jogamp.opengl.GLContext;
  */
 public class SphereRenderer extends RendererBase<Sphere> {
 	private int vao;
-	private int vboIndices;
+	private int vboIndex;
 	private int vboPos;
 	private int vboColor;
 
@@ -38,7 +38,7 @@ public class SphereRenderer extends RendererBase<Sphere> {
 		gl.glGenVertexArrays(vaoBuffer.capacity(), vaoBuffer);
 		gl.glGenBuffers(vboBuffers.capacity(), vboBuffers);
 		vao = vaoBuffer.get(0);
-		vboIndices = vboBuffers.get(0);
+		vboIndex = vboBuffers.get(0);
 		vboPos = vboBuffers.get(1);
 		vboColor = vboBuffers.get(2);
 	}
@@ -48,21 +48,21 @@ public class SphereRenderer extends RendererBase<Sphere> {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
-		IntBuffer vboBuffers = Buffers.newDirectIntBuffer(new int[]{vboIndices, vboPos, vboColor});
+		IntBuffer vboBuffers = Buffers.newDirectIntBuffer(new int[]{vboIndex, vboPos, vboColor});
 		gl.glDeleteVertexArrays(vaoBuffers.capacity(), vaoBuffers);
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
 	public void updateBuffers() {
-		var indicesValues = new ArrayList<Integer>();
+		var indexValues = new ArrayList<Integer>();
 		var posValues = new ArrayList<Float>();
 		var colorValues = new ArrayList<Float>();
 
 		for (Sphere sphere : this.getShapes()) {
 			List<Integer> indices = this.generateIndices(sphere);
-			int baseIndex = indicesValues.size();
+			int baseIndex = indexValues.size();
 			for (int index : indices) {
-				indicesValues.add(baseIndex + index);
+				indexValues.add(baseIndex + index);
 			}
 
 			List<Vector> vertices = this.generateVertices(sphere);
@@ -80,14 +80,14 @@ public class SphereRenderer extends RendererBase<Sphere> {
 			}
 		}
 
-		countIndices = indicesValues.size();
+		countIndices = indexValues.size();
 
-		IntBuffer indicesBuffer = Buffers.newDirectIntBuffer(indicesValues.size());
+		IntBuffer indexBuffer = Buffers.newDirectIntBuffer(indexValues.size());
 		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(posValues.size());
 		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(colorValues.size());
 
-		for (var indexValue : indicesValues) {
-			indicesBuffer.put(indexValue);
+		for (var indexValue : indexValues) {
+			indexBuffer.put(indexValue);
 		}
 		for (var posValue : posValues) {
 			posBuffer.put(posValue);
@@ -95,7 +95,7 @@ public class SphereRenderer extends RendererBase<Sphere> {
 		for (var colorValue : colorValues) {
 			colorBuffer.put(colorValue);
 		}
-		indicesBuffer.flip();
+		indexBuffer.flip();
 		posBuffer.flip();
 		colorBuffer.flip();
 
@@ -112,11 +112,10 @@ public class SphereRenderer extends RendererBase<Sphere> {
 		gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, 0);
 
 		gl.glBindVertexArray(vao);
-		// Indices
-		gl.glBindBuffer(GL3ES3.GL_ELEMENT_ARRAY_BUFFER, vboIndices);
-		gl.glBufferData(GL3ES3.GL_ELEMENT_ARRAY_BUFFER,
-				Buffers.SIZEOF_INT * indicesBuffer.capacity(), indicesBuffer,
-				GL3ES3.GL_DYNAMIC_DRAW);
+		// Index
+		gl.glBindBuffer(GL3ES3.GL_ELEMENT_ARRAY_BUFFER, vboIndex);
+		gl.glBufferData(GL3ES3.GL_ELEMENT_ARRAY_BUFFER, Buffers.SIZEOF_INT * indexBuffer.capacity(),
+				indexBuffer, GL3ES3.GL_DYNAMIC_DRAW);
 		// Position
 		gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboPos);
 		gl.glEnableVertexAttribArray(0);

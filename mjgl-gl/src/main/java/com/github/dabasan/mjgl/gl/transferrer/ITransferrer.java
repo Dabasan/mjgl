@@ -1,12 +1,12 @@
 package com.github.dabasan.mjgl.gl.transferrer;
 
 /**
- * Interface for quad transferrers
+ * Interface for transferrers
  * 
  * @author Daba
  *
  */
-public interface IQuadTransferrer {
+public interface ITransferrer {
 	void deleteBuffers();
 	void transfer();
 }

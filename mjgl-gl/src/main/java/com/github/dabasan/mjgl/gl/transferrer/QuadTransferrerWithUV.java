@@ -13,7 +13,7 @@ import com.jogamp.opengl.GLContext;
  * @author Daba
  *
  */
-public class QuadTransferrerWithUV implements IQuadTransferrer {
+public class QuadTransferrerWithUV implements ITransferrer {
 	private int vao;
 	private int vboIndices;
 	private int vboPos;

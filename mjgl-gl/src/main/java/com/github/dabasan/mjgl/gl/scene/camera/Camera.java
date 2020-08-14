@@ -9,7 +9,7 @@ import com.github.dabasan.mjgl.gl.scene.Node;
  * @author Daba
  *
  */
-public class CameraNode extends Node {
+public class Camera extends Node {
 	private double near;
 	private double far;
 	private double aspect;
@@ -17,7 +17,7 @@ public class CameraNode extends Node {
 	private Vector target;
 	private Vector up;
 
-	public CameraNode() {
+	public Camera() {
 		near = 1.0;
 		far = 1000.0;
 		aspect = (double) 640 / 480;

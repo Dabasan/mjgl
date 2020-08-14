@@ -4,25 +4,26 @@ import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
+import com.github.dabasan.mjgl.math.MathFunctions;
 
 /**
- * Orthographic camera
+ * Perspective camera
  * 
  * @author Daba
  *
  */
-public class OrthographicCameraNode extends CameraNode {
-	private double size;
+public class PerspectiveCamera extends Camera {
+	private double fov;
 
-	public OrthographicCameraNode() {
-		size = 10.0;
+	public PerspectiveCamera() {
+		fov = MathFunctions.convDegToRad(60.0);
 	}
 
-	public void setSize(double size) {
-		this.size = size;
+	public void setFOV(double fov) {
+		this.fov = fov;
 	}
-	public double getSize() {
-		return size;
+	public double getFOV() {
+		return fov;
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class OrthographicCameraNode extends CameraNode {
 
 		Matrix viewTransformation = MatrixFunctions.getViewTransformationMatrix(this.getPosition(),
 				this.getTarget(), this.getUp());
-		Matrix projection = MatrixFunctions.getOrthogonalMatrix(-size, size, -size, size,
+		Matrix projection = MatrixFunctions.getPerspectiveMatrix(fov, this.getAspect(),
 				this.getNear(), this.getFar());
 
 		Matrix vp = projection.mult(viewTransformation);
@@ -45,5 +46,4 @@ public class OrthographicCameraNode extends CameraNode {
 			program.setUniform("camera.vp", vp, true);
 		}
 	}
-
 }

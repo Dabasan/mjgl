@@ -13,7 +13,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class LightingNode extends Node {
+public class Lighting extends Node {
 	private Vector direction;
 	private Color colorAmbient;
 	private Color colorDiffuse;
@@ -22,7 +22,7 @@ public class LightingNode extends Node {
 	private double powerDiffuse;
 	private double powerSpecular;
 
-	public LightingNode() {
+	public Lighting() {
 		direction = new Vector(1.0, -1.0, 1.0).normalize();
 		colorAmbient = Color.WHITE;
 		colorDiffuse = Color.WHITE;

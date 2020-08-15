@@ -1,5 +1,6 @@
 package com.github.dabasan.mjgl.gl.renderer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
@@ -14,6 +15,10 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  */
 public abstract class RendererBase<T> {
 	private List<T> shapes;
+
+	public RendererBase() {
+		shapes = new ArrayList<>();
+	}
 
 	protected List<T> getShapes() {
 		return shapes;

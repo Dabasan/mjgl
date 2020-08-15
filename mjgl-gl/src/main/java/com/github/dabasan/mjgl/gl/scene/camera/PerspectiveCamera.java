@@ -3,7 +3,6 @@ package com.github.dabasan.mjgl.gl.scene.camera;
 import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
-import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.github.dabasan.mjgl.math.MathFunctions;
 
@@ -13,7 +12,7 @@ import com.github.dabasan.mjgl.math.MathFunctions;
  * @author Daba
  *
  */
-public class PerspectiveCamera extends Camera implements IUpdatable {
+public class PerspectiveCamera extends Camera {
 	private double fov;
 
 	public PerspectiveCamera() {
@@ -29,6 +28,8 @@ public class PerspectiveCamera extends Camera implements IUpdatable {
 
 	@Override
 	public void update(List<ShaderProgram> programs) {
+		super.update(programs);
+
 		Matrix viewTransformation = MatrixFunctions.getViewTransformationMatrix(this.getPosition(),
 				this.getTarget(), this.getUp());
 		Matrix projection = MatrixFunctions.getPerspectiveMatrix(fov, this.getAspect(),

@@ -3,7 +3,6 @@ package com.github.dabasan.mjgl.gl.scene.camera;
 import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
-import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
@@ -12,7 +11,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class OrthographicCamera extends Camera implements IUpdatable {
+public class OrthographicCamera extends Camera {
 	private double size;
 
 	public OrthographicCamera() {
@@ -28,6 +27,8 @@ public class OrthographicCamera extends Camera implements IUpdatable {
 
 	@Override
 	public void update(List<ShaderProgram> programs) {
+		super.update(programs);
+
 		Matrix viewTransformation = MatrixFunctions.getViewTransformationMatrix(this.getPosition(),
 				this.getTarget(), this.getUp());
 		Matrix projection = MatrixFunctions.getOrthogonalMatrix(-size, size, -size, size,

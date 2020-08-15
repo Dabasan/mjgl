@@ -1,7 +1,11 @@
 package com.github.dabasan.mjgl.gl.scene.camera;
 
+import java.util.List;
+
 import com.github.dabasan.ejml_3dtools.Vector;
+import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.scene.Node;
+import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
  * Base class for cameras
@@ -9,7 +13,7 @@ import com.github.dabasan.mjgl.gl.scene.Node;
  * @author Daba
  *
  */
-public class Camera extends Node {
+public class Camera extends Node implements IUpdatable {
 	private double near;
 	private double far;
 	private double aspect;
@@ -51,5 +55,10 @@ public class Camera extends Node {
 	}
 	public Vector getUp() {
 		return up;
+	}
+
+	@Override
+	public void update(List<ShaderProgram> programs) {
+
 	}
 }

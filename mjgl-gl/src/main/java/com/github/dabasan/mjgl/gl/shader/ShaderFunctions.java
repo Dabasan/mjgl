@@ -133,13 +133,12 @@ class ShaderFunctions {
 
 		ByteBuffer buffer = Buffers.newDirectByteBuffer(infoLogLength.get(0));
 		gl.glGetShaderInfoLog(shaderID, infoLogLength.get(0), null, buffer);
-		buffer.flip();
 
 		var arrBytes = new byte[buffer.remaining()];
 		buffer.get(arrBytes);
-		String message = new String(arrBytes);
+		buffer.flip();
 
-		return message;
+		return new String(arrBytes);
 	}
 	private static String getProgramInfoLog(GL2ES2 gl, int programID) {
 		IntBuffer infoLogLength = Buffers.newDirectIntBuffer(1);
@@ -147,12 +146,11 @@ class ShaderFunctions {
 
 		ByteBuffer buffer = Buffers.newDirectByteBuffer(infoLogLength.get(0));
 		gl.glGetProgramInfoLog(programID, infoLogLength.get(0), null, buffer);
-		buffer.flip();
 
 		var arrBytes = new byte[buffer.remaining()];
 		buffer.get(arrBytes);
-		String message = new String(arrBytes);
+		buffer.flip();
 
-		return message;
+		return new String(arrBytes);
 	}
 }

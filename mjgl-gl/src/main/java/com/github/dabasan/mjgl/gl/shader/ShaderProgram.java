@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.FloatBuffer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
@@ -21,6 +24,8 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 public class ShaderProgram {
+	private Logger logger = LoggerFactory.getLogger(ShaderProgram.class);
+
 	private int programID;
 
 	public ShaderProgram(int programID) {
@@ -30,12 +35,17 @@ public class ShaderProgram {
 		this.readConstructorBase(isVShader, isFShader);
 	}
 	public ShaderProgram(File fileVShader, File fileFShader) throws IOException {
+		logger.info("Creates a program. vShader: {} fShader: {}", fileVShader.getPath(),
+				fileFShader.getPath());
+
 		try (var fisVShader = new FileInputStream(fileVShader);
 				var fisFShader = new FileInputStream(fileFShader)) {
 			this.readConstructorBase(fisVShader, fisFShader);
 		}
 	}
 	public ShaderProgram(String filepathVShader, String filepathFShader) throws IOException {
+		logger.info("Creates a program. vShader: {} fShader: {}", filepathVShader, filepathFShader);
+
 		try (var fisVShader = new FileInputStream(filepathVShader);
 				var fisFShader = new FileInputStream(filepathFShader)) {
 			this.readConstructorBase(fisVShader, fisFShader);

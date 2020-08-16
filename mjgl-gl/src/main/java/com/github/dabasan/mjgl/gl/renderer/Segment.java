@@ -35,6 +35,10 @@ public class Segment {
 		return color2;
 	}
 
+	public void setPositions(Vector position1, Vector position2) {
+		this.position1 = position1;
+		this.position2 = position2;
+	}
 	public void setPosition1(Vector position1) {
 		this.position1 = position1;
 	}

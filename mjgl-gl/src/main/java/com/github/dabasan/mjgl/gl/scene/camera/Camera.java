@@ -34,6 +34,9 @@ public class Camera extends Node implements IUpdatable {
 		this.near = near;
 		this.far = far;
 	}
+	public void setAspect(double aspect) {
+		this.aspect = aspect;
+	}
 	public void setTarget(Vector target) {
 		this.target = target;
 	}

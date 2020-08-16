@@ -68,8 +68,8 @@ public class ModelBuffer {
 		return texture;
 	}
 
-	public void setIndexBuffer(IntBuffer indicesBuffer) {
-		this.indexBuffer = indicesBuffer;
+	public void setIndexBuffer(IntBuffer indexBuffer) {
+		this.indexBuffer = indexBuffer;
 	}
 	public void setPosBuffer(FloatBuffer posBuffer) {
 		this.posBuffer = posBuffer;

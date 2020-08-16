@@ -45,6 +45,10 @@ public class Segment {
 	public void setPosition2(Vector position2) {
 		this.position2 = position2;
 	}
+	public void setColors(Color color1, Color color2) {
+		this.color1 = color1;
+		this.color2 = color2;
+	}
 	public void setColor1(Color color1) {
 		this.color1 = color1;
 	}

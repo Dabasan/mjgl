@@ -29,6 +29,12 @@ public class Model extends Node {
 	private IntBuffer vboUVBuffers;
 	private IntBuffer vboNormBuffers;
 
+	private static Texture defaultTexture;
+
+	public static void setDefaultTexture(Texture texture) {
+		defaultTexture = texture;
+	}
+
 	public Model(List<ModelBuffer> buffers, FlipVOption option) {
 		this.buffers = buffers;
 		propertyUpdated = false;
@@ -188,7 +194,11 @@ public class Model extends Node {
 			Texture texture = buffer.getTexture();
 			int countIndices = buffer.getCountIndices();
 
-			program.setTexture(samplerName, textureUnit, texture);
+			if (texture != null) {
+				program.setTexture(samplerName, textureUnit, texture);
+			} else {
+				program.setTexture(samplerName, textureUnit, defaultTexture);
+			}
 
 			gl.glBindVertexArray(vaoBuffers.get(i));
 			gl.glEnable(GL3ES3.GL_BLEND);

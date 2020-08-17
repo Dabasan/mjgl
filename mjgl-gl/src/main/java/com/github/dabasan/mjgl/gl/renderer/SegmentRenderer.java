@@ -2,7 +2,6 @@ package com.github.dabasan.mjgl.gl.renderer;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
@@ -102,19 +101,17 @@ public class SegmentRenderer extends RendererBase<Segment> {
 		gl.glBindVertexArray(0);
 	}
 	@Override
-	public void draw(List<ShaderProgram> programs) {
+	public void draw(ShaderProgram program) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numPoints = this.getShapes().size() * 2;
 
-		for (var program : programs) {
-			program.enable();
+		program.enable();
 
-			gl.glBindVertexArray(vao);
-			gl.glEnable(GL3ES3.GL_BLEND);
-			gl.glDrawArrays(GL3ES3.GL_LINES, 0, numPoints);
-			gl.glDisable(GL3ES3.GL_BLEND);
-			gl.glBindVertexArray(0);
-		}
+		gl.glBindVertexArray(vao);
+		gl.glEnable(GL3ES3.GL_BLEND);
+		gl.glDrawArrays(GL3ES3.GL_LINES, 0, numPoints);
+		gl.glDisable(GL3ES3.GL_BLEND);
+		gl.glBindVertexArray(0);
 	}
 }

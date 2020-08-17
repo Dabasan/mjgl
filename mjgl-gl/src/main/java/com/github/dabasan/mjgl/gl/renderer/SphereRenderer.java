@@ -224,17 +224,15 @@ public class SphereRenderer extends RendererBase<Sphere> {
 	}
 
 	@Override
-	public void draw(List<ShaderProgram> programs) {
+	public void draw(ShaderProgram program) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		for (var program : programs) {
-			program.enable();
+		program.enable();
 
-			gl.glBindVertexArray(vao);
-			gl.glEnable(GL3ES3.GL_BLEND);
-			gl.glDrawElements(GL3ES3.GL_LINES, countIndices, GL3ES3.GL_UNSIGNED_INT, 0);
-			gl.glDisable(GL3ES3.GL_BLEND);
-			gl.glBindVertexArray(0);
-		}
+		gl.glBindVertexArray(vao);
+		gl.glEnable(GL3ES3.GL_BLEND);
+		gl.glDrawElements(GL3ES3.GL_LINES, countIndices, GL3ES3.GL_UNSIGNED_INT, 0);
+		gl.glDisable(GL3ES3.GL_BLEND);
+		gl.glBindVertexArray(0);
 	}
 }

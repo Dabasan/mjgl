@@ -36,5 +36,5 @@ public abstract class RendererBase<T> {
 
 	public abstract void deleteBuffers();
 	public abstract void updateBuffers();
-	public abstract void draw(List<ShaderProgram> programs);
+	public abstract void draw(ShaderProgram program);
 }

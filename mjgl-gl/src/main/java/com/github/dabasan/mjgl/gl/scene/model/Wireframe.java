@@ -1,0 +1,248 @@
+package com.github.dabasan.mjgl.gl.scene.model;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.util.List;
+
+import com.github.dabasan.ejml_3dtools.Matrix;
+import com.github.dabasan.ejml_3dtools.Vector;
+import com.github.dabasan.mjgl.gl.Color;
+import com.github.dabasan.mjgl.gl.scene.Node;
+import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
+import com.jogamp.common.nio.Buffers;
+import com.jogamp.opengl.GL3ES3;
+import com.jogamp.opengl.GLContext;
+
+/**
+ * Model wireframe
+ * 
+ * @author Daba
+ *
+ */
+public class Wireframe extends Node {
+	private List<ModelBuffer> buffers;
+	private boolean propertyUpdated;
+
+	private IntBuffer vaoBuffers;
+	private IntBuffer vboIndexBuffers;
+	private IntBuffer vboPosBuffers;
+	private IntBuffer vboColorBuffers;
+
+	public Wireframe(List<ModelBuffer> buffers) {
+		this.buffers = buffers;
+		propertyUpdated = false;
+
+		this.generateBuffers();
+	}
+	private void generateBuffers() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		int numBuffers = buffers.size();
+		vaoBuffers = Buffers.newDirectIntBuffer(numBuffers);
+		vboIndexBuffers = Buffers.newDirectIntBuffer(numBuffers);
+		vboPosBuffers = Buffers.newDirectIntBuffer(numBuffers);
+		vboColorBuffers = Buffers.newDirectIntBuffer(numBuffers);
+
+		gl.glGenVertexArrays(numBuffers, vaoBuffers);
+		gl.glGenBuffers(numBuffers, vboIndexBuffers);
+		gl.glGenBuffers(numBuffers, vboPosBuffers);
+		gl.glGenBuffers(numBuffers, vboColorBuffers);
+
+		for (int i = 0; i < numBuffers; i++) {
+			ModelBuffer buffer = buffers.get(i);
+
+			FloatBuffer posBuffer = buffer.getPosBuffer();
+			// Position
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboPosBuffers.get(i));
+			gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * posBuffer.capacity(),
+					posBuffer, GL3ES3.GL_DYNAMIC_DRAW);
+
+			// Generate a color buffer.
+			Color colorDiffuse = buffer.getColorDiffuse();
+			int numElements = posBuffer.capacity() / 4;
+			FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numElements * 4);
+			for (int j = 0; j < numElements; j++) {
+				colorBuffer.put(colorDiffuse.getR());
+				colorBuffer.put(colorDiffuse.getG());
+				colorBuffer.put(colorDiffuse.getB());
+				colorBuffer.put(colorDiffuse.getA());
+			}
+			colorBuffer.flip();
+
+			// Color
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboColorBuffers.get(i));
+			gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * colorBuffer.capacity(),
+					colorBuffer, GL3ES3.GL_STATIC_DRAW);
+
+			IntBuffer indexBuffer = buffer.getIndexBuffer();
+
+			gl.glBindVertexArray(vaoBuffers.get(i));
+			// Index
+			gl.glBindBuffer(GL3ES3.GL_ELEMENT_ARRAY_BUFFER, vboIndexBuffers.get(i));
+			gl.glBufferData(GL3ES3.GL_ELEMENT_ARRAY_BUFFER,
+					Buffers.SIZEOF_INT * indexBuffer.capacity(), indexBuffer,
+					GL3ES3.GL_STATIC_DRAW);
+			// Position
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboPosBuffers.get(i));
+			gl.glEnableVertexAttribArray(0);
+			gl.glVertexAttribPointer(0, 3, GL3ES3.GL_FLOAT, false, Buffers.SIZEOF_FLOAT * 3, 0);
+			// Color
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboColorBuffers.get(i));
+			gl.glEnableVertexAttribArray(1);
+			gl.glVertexAttribPointer(1, 4, GL3ES3.GL_FLOAT, false, Buffers.SIZEOF_FLOAT * 4, 0);
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, 0);
+			gl.glBindVertexArray(0);
+		}
+	}
+	public void updateBuffers() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		int numBuffers = buffers.size();
+		for (int i = 0; i < numBuffers; i++) {
+			ModelBuffer buffer = buffers.get(i);
+
+			FloatBuffer posBuffer = buffer.getPosBuffer();
+
+			gl.glBindVertexArray(vaoBuffers.get(i));
+			// Position
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboPosBuffers.get(i));
+			gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * posBuffer.capacity(),
+					posBuffer, GL3ES3.GL_DYNAMIC_DRAW);
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, 0);
+			gl.glBindVertexArray(0);
+		}
+
+		propertyUpdated = false;
+	}
+	public void deleteBuffers(boolean deleteTextures) {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		int numBuffers = buffers.size();
+		gl.glDeleteVertexArrays(numBuffers, vaoBuffers);
+		gl.glDeleteBuffers(numBuffers, vboIndexBuffers);
+		gl.glDeleteBuffers(numBuffers, vboPosBuffers);
+		gl.glDeleteBuffers(numBuffers, vboColorBuffers);
+
+		if (deleteTextures == true) {
+			for (var buffer : buffers) {
+				buffer.getTexture().destroy(gl);
+			}
+		}
+	}
+
+	public int getNumBuffers() {
+		return buffers.size();
+	}
+
+	public void setWireframeColor(Color color) {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		int numBuffers = buffers.size();
+		for (int i = 0; i < numBuffers; i++) {
+			ModelBuffer buffer = buffers.get(i);
+
+			FloatBuffer posBuffer = buffer.getPosBuffer();
+			int numElements = posBuffer.capacity() / 4;
+
+			FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numElements * 4);
+			for (int j = 0; j < numElements; j++) {
+				colorBuffer.put(color.getR());
+				colorBuffer.put(color.getG());
+				colorBuffer.put(color.getB());
+				colorBuffer.put(color.getA());
+			}
+			colorBuffer.flip();
+
+			// Color
+			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboColorBuffers.get(i));
+			gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * colorBuffer.capacity(),
+					colorBuffer, GL3ES3.GL_STATIC_DRAW);
+		}
+	}
+
+	public void drawWireframe(ShaderProgram program) {
+		if (propertyUpdated == true) {
+			this.updateBuffers();
+		}
+
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		int numBuffers = buffers.size();
+
+		program.enable();
+		for (int i = 0; i < numBuffers; i++) {
+			ModelBuffer buffer = buffers.get(i);
+			int countIndices = buffer.getCountIndices();
+
+			gl.glBindVertexArray(vaoBuffers.get(i));
+			gl.glEnable(GL3ES3.GL_BLEND);
+			gl.glDrawElements(GL3ES3.GL_TRIANGLES, countIndices, GL3ES3.GL_UNSIGNED_INT, 0);
+			gl.glDisable(GL3ES3.GL_BLEND);
+			gl.glBindVertexArray(vaoBuffers.get(0));
+		}
+	}
+
+	public void transform(Matrix m) {
+		super.transform(m);
+
+		for (var buffer : buffers) {
+			FloatBuffer posBuffer = buffer.getPosBuffer();
+
+			for (int i = 0; i < posBuffer.capacity(); i += 3) {
+				// Position
+				var position = new Vector(posBuffer.get(i), posBuffer.get(i + 1),
+						posBuffer.get(i + 2));
+				position = position.transform(m);
+
+				posBuffer.put(i, position.getXFloat());
+				posBuffer.put(i + 1, position.getYFloat());
+				posBuffer.put(i + 2, position.getZFloat());
+			}
+
+			buffer.setPosBuffer(posBuffer);
+		}
+
+		propertyUpdated = true;
+	}
+	public void translate(Vector translation) {
+		super.translate(translation);
+
+		var mTranslation = Matrix.createTranslationMatrix(translation.getX(), translation.getY(),
+				translation.getZ());
+		this.transform(mTranslation);
+	}
+	public void rescale(Vector scale) {
+		super.rescale(scale);
+
+		var mScaling = Matrix.createScalingMatrix(scale.getX(), scale.getY(), scale.getZ());
+		this.transform(mScaling);
+	}
+	public void rotX(double th) {
+		super.rotX(th);
+
+		var mRotX = Matrix.createRotationXMatrix(th);
+		this.transform(mRotX);
+	}
+	public void rotY(double th) {
+		super.rotY(th);
+
+		var mRotY = Matrix.createRotationYMatrix(th);
+		this.transform(mRotY);
+	}
+	public void rotZ(double th) {
+		super.rotZ(th);
+
+		var mRotZ = Matrix.createRotationZMatrix(th);
+		this.transform(mRotZ);
+	}
+	public void rot(Vector axis, double th) {
+		super.rot(axis, th);
+
+		var mRot = Matrix.createRotationMatrix(axis.getX(), axis.getY(), axis.getZ(), th);
+		this.transform(mRot);
+	}
+
+	public List<ModelBuffer> getBuffers() {
+		return buffers;
+	}
+}

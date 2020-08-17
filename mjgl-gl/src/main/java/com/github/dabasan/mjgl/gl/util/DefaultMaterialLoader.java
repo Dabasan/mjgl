@@ -26,6 +26,7 @@ public class DefaultMaterialLoader {
 	public DefaultMaterialLoader(String baseDir) throws IOException {
 		programs2D = new ArrayList<>();
 		programs3D = new ArrayList<>();
+		textures = new ArrayList<>();
 
 		// Search in the directories.
 		Path shader2DBaseDir = Paths.get(baseDir, "Shader", "Default", "2D");

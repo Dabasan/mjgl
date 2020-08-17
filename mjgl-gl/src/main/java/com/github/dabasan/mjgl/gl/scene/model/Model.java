@@ -9,6 +9,7 @@ import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.jogamp.common.nio.Buffers;
+import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.texture.Texture;
@@ -39,7 +40,25 @@ public class Model extends Node {
 		this.buffers = buffers;
 		propertyUpdated = false;
 
+		this.setTexureParameters();
 		this.generateBuffers(option);
+	}
+	private void setTexureParameters() {
+		for (var buffer : buffers) {
+			Texture texture = buffer.getTexture();
+			if (texture == null) {
+				continue;
+			}
+
+			GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+			texture.bind(gl);
+			gl.glGenerateMipmap(texture.getTarget());
+			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_MIN_FILTER,
+					GL2ES2.GL_LINEAR_MIPMAP_LINEAR);
+			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_MAG_FILTER, GL2ES2.GL_LINEAR);
+			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_WRAP_S, GL2ES2.GL_REPEAT);
+			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_WRAP_T, GL2ES2.GL_REPEAT);
+		}
 	}
 	private void generateBuffers(FlipVOption option) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();

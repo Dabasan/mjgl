@@ -50,12 +50,14 @@ public class DefaultAssetLoader {
 			var fileVShader = new File(shader2DDir.toString(), "vshader.glsl");
 			var fileFShader = new File(shader2DDir.toString(), "fshader.glsl");
 			var program = new ShaderProgram(fileVShader, fileFShader);
+			program.setTag(shader2DDir.getFileName().toString());
 			programs2D.add(program);
 		}
 		for (var shader3DDir : shader3DDirs) {
 			var fileVShader = new File(shader3DDir.toString(), "vshader.glsl");
 			var fileFShader = new File(shader3DDir.toString(), "fshader.glsl");
 			var program = new ShaderProgram(fileVShader, fileFShader);
+			program.setTag(shader3DDir.getFileName().toString());
 			programs3D.add(program);
 		}
 		for (var textureFilepath : textureFilepaths) {
@@ -73,5 +75,28 @@ public class DefaultAssetLoader {
 	}
 	public List<Texture> getTextures() {
 		return new ArrayList<>(textures);
+	}
+
+	public ShaderProgram getProgram2DByTag(String tag) {
+		ShaderProgram ret = null;
+		for (var program : programs2D) {
+			if (program.getTag().equals(tag)) {
+				ret = program;
+				break;
+			}
+		}
+
+		return ret;
+	}
+	public ShaderProgram getProgram3DByTag(String tag) {
+		ShaderProgram ret = null;
+		for (var program : programs3D) {
+			if (program.getTag().equals(tag)) {
+				ret = program;
+				break;
+			}
+		}
+
+		return ret;
 	}
 }

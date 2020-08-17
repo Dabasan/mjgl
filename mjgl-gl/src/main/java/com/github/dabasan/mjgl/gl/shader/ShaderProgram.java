@@ -27,9 +27,11 @@ public class ShaderProgram {
 	private Logger logger = LoggerFactory.getLogger(ShaderProgram.class);
 
 	private int programID;
+	private String tag;
 
 	public ShaderProgram(int programID) {
 		this.programID = programID;
+		tag = "";
 	}
 	public ShaderProgram(InputStream isVShader, InputStream isFShader) throws IOException {
 		this.readConstructorBase(isVShader, isFShader);
@@ -54,6 +56,7 @@ public class ShaderProgram {
 	private void readConstructorBase(InputStream isVShader, InputStream isFShader)
 			throws IOException {
 		programID = ShaderFunctions.createProgram(isVShader, isFShader);
+		tag = "";
 	}
 
 	public boolean isValid() {
@@ -62,6 +65,13 @@ public class ShaderProgram {
 
 	public int getProgramID() {
 		return programID;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 	public void enable() {

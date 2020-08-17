@@ -26,7 +26,7 @@ public class ModelLoader {
 	 *            Flips texture V-coordinate if true
 	 * @return List containing model buffers
 	 * @throws IOException
-	 *             Thrown when this function has failed to load the model
+	 *             Thrown when this method has failed to load the model
 	 */
 	public static List<ModelBuffer> loadBD1(InputStream isBD1, String bd1Dir, boolean invertZ,
 			boolean flipV) throws IOException {
@@ -43,7 +43,7 @@ public class ModelLoader {
 	 *            Flips texture V-coordinate if true
 	 * @return List containing model buffers
 	 * @throws IOException
-	 *             Thrown when this function has failed to load the model
+	 *             Thrown when this method has failed to load the model
 	 */
 	public static List<ModelBuffer> loadBD1(File fileBD1, boolean invertZ, boolean flipV)
 			throws IOException {
@@ -66,10 +66,69 @@ public class ModelLoader {
 	 *            Flips texture V-coordinate if true
 	 * @return List containing model buffers
 	 * @throws IOException
-	 *             Thrown when this function has failed to load the model
+	 *             Thrown when this method has failed to load the model
 	 */
 	public static List<ModelBuffer> loadBD1(String filepathBD1, boolean invertZ, boolean flipV)
 			throws IOException {
 		return loadBD1(new File(filepathBD1), invertZ, flipV);
+	}
+
+	/**
+	 * Loads an OBJ file.
+	 * 
+	 * @param isObj
+	 *            InputStream
+	 * @param objDir
+	 *            Directory of the OBJ file
+	 * @return List containing model buffers
+	 * @throws IOException
+	 *             Thrown when this method has failed to load the model
+	 */
+	public static List<ModelBuffer> loadOBJ(InputStream isObj, String objDir) throws IOException {
+		return OBJLoader.loadOBJ(isObj, objDir);
+	}
+	/**
+	 * Loads an OBJ file.
+	 * 
+	 * @param fileObj
+	 *            File
+	 * @return List containing model buffers
+	 * @throws IOException
+	 *             Thrown when this method has failed to load the model
+	 */
+	public static List<ModelBuffer> loadOBJ(File fileObj) throws IOException {
+		String objDir = fileObj.getParent();
+		List<ModelBuffer> buffers;
+		try (var fis = new FileInputStream(fileObj)) {
+			buffers = OBJLoader.loadOBJ(fis, objDir);
+		}
+
+		return buffers;
+	}
+	/**
+	 * Loads an OBJ file.
+	 * 
+	 * @param filepathObj
+	 *            Filepath
+	 * @return List containing model buffers
+	 * @throws IOException
+	 *             Thrown when this method has failed to load the model
+	 */
+	public static List<ModelBuffer> loadOBJ(String filepathObj) throws IOException {
+		return loadOBJ(new File(filepathObj));
+	}
+
+	/**
+	 * Loads a model.<br>
+	 * This method requires native libraries for JAssimp.
+	 * 
+	 * @param filepath
+	 *            Filepath
+	 * @return List containing model buffers
+	 * @throws IOException
+	 *             Thrown when this method has failed to load the model
+	 */
+	public static List<ModelBuffer> loadModel(String filepath) throws IOException {
+		return AssimpLoader.loadModel(filepath);
 	}
 }

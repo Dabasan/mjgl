@@ -59,9 +59,9 @@ public class Wireframe extends Node {
 
 			// Generate a color buffer.
 			Color colorDiffuse = buffer.getColorDiffuse();
-			int numElements = posBuffer.capacity() / 4;
-			FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numElements * 4);
-			for (int j = 0; j < numElements; j++) {
+			int numVertices = posBuffer.capacity() / 3;
+			FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numVertices * 4);
+			for (int j = 0; j < numVertices; j++) {
 				colorBuffer.put(colorDiffuse.getR());
 				colorBuffer.put(colorDiffuse.getG());
 				colorBuffer.put(colorDiffuse.getB());
@@ -134,33 +134,36 @@ public class Wireframe extends Node {
 		return buffers.size();
 	}
 
-	public void setWireframeColor(Color color) {
+	public int setWireframeColor(int index, Color color) {
+		if (!(0 <= index && index < buffers.size())) {
+			return -1;
+		}
+
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		int numBuffers = buffers.size();
-		for (int i = 0; i < numBuffers; i++) {
-			ModelBuffer buffer = buffers.get(i);
+		ModelBuffer buffer = buffers.get(index);
 
-			FloatBuffer posBuffer = buffer.getPosBuffer();
-			int numElements = posBuffer.capacity() / 4;
+		FloatBuffer posBuffer = buffer.getPosBuffer();
+		int numVertices = posBuffer.capacity() / 3;
 
-			FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numElements * 4);
-			for (int j = 0; j < numElements; j++) {
-				colorBuffer.put(color.getR());
-				colorBuffer.put(color.getG());
-				colorBuffer.put(color.getB());
-				colorBuffer.put(color.getA());
-			}
-			colorBuffer.flip();
-
-			// Color
-			gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboColorBuffers.get(i));
-			gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * colorBuffer.capacity(),
-					colorBuffer, GL3ES3.GL_STATIC_DRAW);
+		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numVertices * 4);
+		for (int j = 0; j < numVertices; j++) {
+			colorBuffer.put(color.getR());
+			colorBuffer.put(color.getG());
+			colorBuffer.put(color.getB());
+			colorBuffer.put(color.getA());
 		}
+		colorBuffer.flip();
+
+		// Color
+		gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboColorBuffers.get(index));
+		gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * colorBuffer.capacity(),
+				colorBuffer, GL3ES3.GL_STATIC_DRAW);
+
+		return 0;
 	}
 
-	public void drawWireframe(ShaderProgram program) {
+	public void draw(ShaderProgram program) {
 		if (propertyUpdated == true) {
 			this.updateBuffers();
 		}
@@ -176,7 +179,10 @@ public class Wireframe extends Node {
 
 			gl.glBindVertexArray(vaoBuffers.get(i));
 			gl.glEnable(GL3ES3.GL_BLEND);
-			gl.glDrawElements(GL3ES3.GL_TRIANGLES, countIndices, GL3ES3.GL_UNSIGNED_INT, 0);
+			for (int j = 0; j < countIndices; j += 3) {
+				gl.glDrawElements(GL3ES3.GL_LINE_LOOP, 3, GL3ES3.GL_UNSIGNED_INT,
+						j * Buffers.SIZEOF_INT);
+			}
 			gl.glDisable(GL3ES3.GL_BLEND);
 			gl.glBindVertexArray(vaoBuffers.get(0));
 		}

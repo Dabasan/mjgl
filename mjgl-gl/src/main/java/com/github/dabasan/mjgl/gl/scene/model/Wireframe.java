@@ -187,6 +187,7 @@ public class Wireframe extends Node {
 
 		for (var buffer : buffers) {
 			FloatBuffer posBuffer = buffer.getPosBuffer();
+			FloatBuffer normBuffer = buffer.getNormBuffer();
 
 			for (int i = 0; i < posBuffer.capacity(); i += 3) {
 				// Position
@@ -197,9 +198,19 @@ public class Wireframe extends Node {
 				posBuffer.put(i, position.getXFloat());
 				posBuffer.put(i + 1, position.getYFloat());
 				posBuffer.put(i + 2, position.getZFloat());
+
+				// Normal
+				var norm = new Vector(normBuffer.get(i), normBuffer.get(i + 1),
+						normBuffer.get(i + 2));
+				norm = norm.transformSR(m).normalize();
+
+				normBuffer.put(i, norm.getXFloat());
+				normBuffer.put(i + 1, norm.getYFloat());
+				normBuffer.put(i + 2, norm.getZFloat());
 			}
 
 			buffer.setPosBuffer(posBuffer);
+			buffer.setNormBuffer(normBuffer);
 		}
 
 		propertyUpdated = true;

@@ -7,6 +7,7 @@ import com.github.dabasan.mjgl.input.KeyCode;
 import com.github.dabasan.mjgl.input.Keyboard;
 import com.github.dabasan.mjgl.input.Mouse;
 import com.github.dabasan.mjgl.input.MouseCode;
+import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 
@@ -77,6 +78,9 @@ public class WindowBase implements GLEventListener {
 	}
 	@Override
 	public void display(GLAutoDrawable drawable) {
+		GL2ES2 gl = drawable.getGL().getGL2ES2();
+		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT);
+
 		keyboard.update();
 		mouse.update();
 		this.update();

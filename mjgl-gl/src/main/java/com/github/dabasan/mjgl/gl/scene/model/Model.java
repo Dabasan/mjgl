@@ -131,7 +131,6 @@ public class Model extends Node {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numBuffers = buffers.size();
-
 		for (int i = 0; i < numBuffers; i++) {
 			ModelBuffer buffer = buffers.get(i);
 

@@ -13,17 +13,17 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
 /**
- * Default material loader
+ * Default asset loader
  * 
  * @author Daba
  *
  */
-public class DefaultMaterialLoader {
+public class DefaultAssetLoader {
 	private List<ShaderProgram> programs2D;
 	private List<ShaderProgram> programs3D;
 	private List<Texture> textures;
 
-	public DefaultMaterialLoader(String baseDir) throws IOException {
+	public DefaultAssetLoader(String baseDir) throws IOException {
 		programs2D = new ArrayList<>();
 		programs3D = new ArrayList<>();
 		textures = new ArrayList<>();

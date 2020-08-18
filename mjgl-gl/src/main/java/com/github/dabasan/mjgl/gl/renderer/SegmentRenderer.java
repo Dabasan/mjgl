@@ -49,8 +49,8 @@ public class SegmentRenderer extends RendererBase<Segment> {
 	public void updateBuffers() {
 		int numPoints = this.getShapes().size() * 2;
 
-		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numPoints * 3 * 2);
-		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numPoints * 4 * 2);
+		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numPoints * 3);
+		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numPoints * 4);
 
 		for (Segment segment : this.getShapes()) {
 			Vector pos1 = segment.getPosition1();

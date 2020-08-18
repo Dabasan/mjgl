@@ -1,5 +1,6 @@
 package com.github.dabasan.mjgl.gl.scene.model;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.List;
@@ -37,6 +38,38 @@ public class Model extends Node {
 	}
 
 	public Model(List<ModelBuffer> buffers, FlipVOption option) {
+		this.buffers = buffers;
+		propertyUpdated = false;
+
+		this.setTexureParameters();
+		this.generateBuffers(option);
+	}
+	public Model(String modelFilepath, FlipVOption option) throws IOException {
+		// Get the file extension.
+		int lastIndexOfDot = modelFilepath.lastIndexOf('.');
+		if (lastIndexOfDot == -1) {
+			String errMessage = String.format(
+					"Failed to detect the file extension from the filepath. filepath=%s",
+					modelFilepath);
+			throw new IOException(errMessage);
+		}
+
+		String extension = modelFilepath.substring(lastIndexOfDot + 1).toLowerCase();
+
+		// Load the model.
+		List<ModelBuffer> buffers;
+		switch (extension) {
+			case "bd1" :
+				buffers = ModelLoader.loadBD1(modelFilepath, true, false);
+				break;
+			case "obj" :
+				buffers = ModelLoader.loadOBJ(modelFilepath);
+				break;
+			default :
+				buffers = ModelLoader.loadModel(modelFilepath);
+				break;
+		}
+
 		this.buffers = buffers;
 		propertyUpdated = false;
 

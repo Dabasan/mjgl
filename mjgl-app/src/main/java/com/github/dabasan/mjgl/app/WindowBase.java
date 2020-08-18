@@ -79,7 +79,8 @@ public class WindowBase implements GLEventListener {
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		GL2ES2 gl = drawable.getGL().getGL2ES2();
-		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT);
+		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT
+				| GL2ES2.GL_STENCIL_BUFFER_BIT);
 
 		keyboard.update();
 		mouse.update();

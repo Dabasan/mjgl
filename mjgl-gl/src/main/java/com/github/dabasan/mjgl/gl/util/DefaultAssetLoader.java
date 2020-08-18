@@ -50,20 +50,33 @@ public class DefaultAssetLoader {
 			var fileVShader = new File(shader2DDir.toString(), "vshader.glsl");
 			var fileFShader = new File(shader2DDir.toString(), "fshader.glsl");
 			var program = new ShaderProgram(fileVShader, fileFShader);
-			program.setTag(shader2DDir.getFileName().toString());
+			String tag = this.getShaderTag(shader2DDir);
+			program.setTag(tag);
 			programs2D.add(program);
 		}
 		for (var shader3DDir : shader3DDirs) {
 			var fileVShader = new File(shader3DDir.toString(), "vshader.glsl");
 			var fileFShader = new File(shader3DDir.toString(), "fshader.glsl");
 			var program = new ShaderProgram(fileVShader, fileFShader);
-			program.setTag(shader3DDir.getFileName().toString());
+			String tag = this.getShaderTag(shader3DDir);
+			program.setTag(tag);
 			programs3D.add(program);
 		}
 		for (var textureFilepath : textureFilepaths) {
 			var fileTexture = new File(textureFilepath.toString());
 			Texture texture = TextureIO.newTexture(fileTexture, true);
 			textures.add(texture);
+		}
+	}
+	private String getShaderTag(Path path) {
+		int nameCount = path.getNameCount();
+		String dir1 = path.getName(nameCount - 2).toString();
+		String dir2 = path.getName(nameCount - 1).toString();
+
+		if (dir1.equals("2D") || dir1.equals("3D")) {
+			return dir2;
+		} else {
+			return dir1 + "/" + dir2;
 		}
 	}
 

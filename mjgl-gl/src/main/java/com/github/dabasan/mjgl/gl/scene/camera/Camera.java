@@ -1,7 +1,5 @@
 package com.github.dabasan.mjgl.gl.scene.camera;
 
-import java.util.List;
-
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.scene.Node;
@@ -61,7 +59,7 @@ public class Camera extends Node implements IUpdatable {
 	}
 
 	@Override
-	public void update(List<ShaderProgram> programs) {
+	public void update(ShaderProgram program) {
 
 	}
 }

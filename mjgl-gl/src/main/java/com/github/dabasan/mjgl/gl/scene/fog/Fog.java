@@ -1,7 +1,5 @@
 package com.github.dabasan.mjgl.gl.scene.fog;
 
-import java.util.List;
-
 import com.github.dabasan.mjgl.gl.Color;
 import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
@@ -44,12 +42,10 @@ public class Fog implements IUpdatable {
 	}
 
 	@Override
-	public void update(List<ShaderProgram> programs) {
-		for (var progam : programs) {
-			progam.enable();
-			progam.setUniform("fog.start", start);
-			progam.setUniform("fog.end", end);
-			progam.setUniform("fog.color", color);
-		}
+	public void update(ShaderProgram program) {
+		program.enable();
+		program.setUniform("fog.start", start);
+		program.setUniform("fog.end", end);
+		program.setUniform("fog.color", color);
 	}
 }

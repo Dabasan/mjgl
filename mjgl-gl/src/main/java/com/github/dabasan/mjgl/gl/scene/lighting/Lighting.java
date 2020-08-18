@@ -1,7 +1,5 @@
 package com.github.dabasan.mjgl.gl.scene.lighting;
 
-import java.util.List;
-
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
 import com.github.dabasan.mjgl.gl.scene.IUpdatable;
@@ -77,16 +75,14 @@ public class Lighting implements IUpdatable {
 	}
 
 	@Override
-	public void update(List<ShaderProgram> programs) {
-		for (var program : programs) {
-			program.enable();
-			program.setUniform("lighting.direction", direction);
-			program.setUniform("lighting.colorAmbient", colorAmbient);
-			program.setUniform("lighting.colorDiffuse", colorDiffuse);
-			program.setUniform("lighting.colorSpecular", colorSpecular);
-			program.setUniform("lighting.powerAmbient", powerAmbient);
-			program.setUniform("lighting.powerDiffuse", powerDiffuse);
-			program.setUniform("lighting.powerSpecular", powerSpecular);
-		}
+	public void update(ShaderProgram program) {
+		program.enable();
+		program.setUniform("lighting.direction", direction);
+		program.setUniform("lighting.colorAmbient", colorAmbient);
+		program.setUniform("lighting.colorDiffuse", colorDiffuse);
+		program.setUniform("lighting.colorSpecular", colorSpecular);
+		program.setUniform("lighting.powerAmbient", powerAmbient);
+		program.setUniform("lighting.powerDiffuse", powerDiffuse);
+		program.setUniform("lighting.powerSpecular", powerSpecular);
 	}
 }

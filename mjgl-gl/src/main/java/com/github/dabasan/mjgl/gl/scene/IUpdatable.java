@@ -2,8 +2,6 @@ package com.github.dabasan.mjgl.gl.scene;
 
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
-import java.util.List;
-
 /**
  * Interface for updatable objects
  * 
@@ -11,5 +9,5 @@ import java.util.List;
  *
  */
 public interface IUpdatable {
-	void update(List<ShaderProgram> programs);
+	void update(ShaderProgram program);
 }

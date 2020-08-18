@@ -1,7 +1,5 @@
 package com.github.dabasan.mjgl.gl.scene.camera;
 
-import java.util.List;
-
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.github.dabasan.mjgl.math.MathFunctions;
@@ -27,8 +25,8 @@ public class PerspectiveCamera extends Camera {
 	}
 
 	@Override
-	public void update(List<ShaderProgram> programs) {
-		super.update(programs);
+	public void update(ShaderProgram program) {
+		super.update(program);
 
 		Matrix viewTransformation = MatrixFunctions.getViewTransformationMatrix(this.getPosition(),
 				this.getTarget(), this.getUp());
@@ -37,13 +35,11 @@ public class PerspectiveCamera extends Camera {
 
 		Matrix vp = projection.mult(viewTransformation);
 
-		for (var program : programs) {
-			program.enable();
-			program.setUniform("camera.near", this.getNear());
-			program.setUniform("camera.far", this.getFar());
-			program.setUniform("camera.position", this.getPosition());
-			program.setUniform("camera.target", this.getTarget());
-			program.setUniform("camera.vp", vp, true);
-		}
+		program.enable();
+		program.setUniform("camera.near", this.getNear());
+		program.setUniform("camera.far", this.getFar());
+		program.setUniform("camera.position", this.getPosition());
+		program.setUniform("camera.target", this.getTarget());
+		program.setUniform("camera.vp", vp, true);
 	}
 }

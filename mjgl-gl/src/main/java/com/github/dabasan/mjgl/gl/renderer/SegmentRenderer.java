@@ -53,10 +53,13 @@ public class SegmentRenderer extends RendererBase<Segment> {
 		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numPoints * 4);
 
 		for (Segment segment : this.getShapes()) {
-			Vector pos1 = segment.getPosition1();
-			Vector pos2 = segment.getPosition2();
-			Color color1 = segment.getColor1();
-			Color color2 = segment.getColor2();
+			Point point1 = segment.getPoint1();
+			Point point2 = segment.getPoint2();
+
+			Vector pos1 = point1.getPosition();
+			Vector pos2 = point2.getPosition();
+			Color color1 = point1.getColor();
+			Color color2 = point2.getColor();
 
 			posBuffer.put(pos1.getXFloat());
 			posBuffer.put(pos1.getYFloat());

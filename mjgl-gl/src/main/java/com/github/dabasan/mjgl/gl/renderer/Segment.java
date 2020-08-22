@@ -1,8 +1,5 @@
 package com.github.dabasan.mjgl.gl.renderer;
 
-import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.Color;
-
 /**
  * Segment
  * 
@@ -10,49 +7,25 @@ import com.github.dabasan.mjgl.gl.Color;
  *
  */
 public class Segment {
-	private Vector position1;
-	private Vector position2;
-	private Color color1;
-	private Color color2;
+	private Point point1;
+	private Point point2;
 
 	public Segment() {
-		position1 = new Vector();
-		position2 = new Vector();
-		color1 = Color.WHITE;
-		color2 = Color.WHITE;
+		point1 = new Point();
+		point2 = new Point();
 	}
 
-	public Vector getPosition1() {
-		return position1;
+	public Point getPoint1() {
+		return point1;
 	}
-	public Vector getPosition2() {
-		return position2;
-	}
-	public Color getColor1() {
-		return color1;
-	}
-	public Color getColor2() {
-		return color2;
+	public Point getPoint2() {
+		return point2;
 	}
 
-	public void setPositions(Vector position1, Vector position2) {
-		this.position1 = position1;
-		this.position2 = position2;
+	public void setPoint1(Point point) {
+		point1 = point;
 	}
-	public void setPosition1(Vector position1) {
-		this.position1 = position1;
-	}
-	public void setPosition2(Vector position2) {
-		this.position2 = position2;
-	}
-	public void setColors(Color color1, Color color2) {
-		this.color1 = color1;
-		this.color2 = color2;
-	}
-	public void setColor1(Color color1) {
-		this.color1 = color1;
-	}
-	public void setColor2(Color color2) {
-		this.color2 = color2;
+	public void setPoint2(Point point) {
+		point2 = point;
 	}
 }

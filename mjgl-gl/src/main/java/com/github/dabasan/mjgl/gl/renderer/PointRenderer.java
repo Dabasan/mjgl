@@ -54,15 +54,15 @@ public class PointRenderer extends RendererBase<Point> {
 
 		for (Point point : this.getShapes()) {
 			Vector pos = point.getPosition();
-			Color colorDif = point.getColor();
+			Color color = point.getColor();
 
 			posBuffer.put(pos.getXFloat());
 			posBuffer.put(pos.getYFloat());
 			posBuffer.put(pos.getZFloat());
-			colorBuffer.put(colorDif.getR());
-			colorBuffer.put(colorDif.getG());
-			colorBuffer.put(colorDif.getB());
-			colorBuffer.put(colorDif.getA());
+			colorBuffer.put(color.getR());
+			colorBuffer.put(color.getG());
+			colorBuffer.put(color.getB());
+			colorBuffer.put(color.getA());
 		}
 		posBuffer.flip();
 		colorBuffer.flip();

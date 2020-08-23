@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.renderer;
+package com.github.dabasan.mjgl.gl.renderer.shape;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

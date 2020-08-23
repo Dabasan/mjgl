@@ -1,17 +1,17 @@
-package com.github.dabasan.mjgl.gl.renderer;
+package com.github.dabasan.mjgl.gl.renderer.shape;
 
 /**
- * Quadrangle
+ * Triangle
  * 
  * @author Daba
  *
  */
-public class Quadrangle {
+public class Triangle {
 	private Vertex[] vertices;
 
-	public Quadrangle() {
-		vertices = new Vertex[4];
-		for (int i = 0; i < 4; i++) {
+	public Triangle() {
+		vertices = new Vertex[3];
+		for (int i = 0; i < 3; i++) {
 			vertices[i] = new Vertex();
 		}
 	}
@@ -24,7 +24,7 @@ public class Quadrangle {
 	}
 
 	public void setVertices(Vertex[] vertices) {
-		if (vertices.length != 4) {
+		if (vertices.length != 3) {
 			return;
 		}
 

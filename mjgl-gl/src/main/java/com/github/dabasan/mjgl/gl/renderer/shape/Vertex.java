@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.renderer;
+package com.github.dabasan.mjgl.gl.renderer.shape;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 

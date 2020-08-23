@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.renderer;
+package com.github.dabasan.mjgl.gl.renderer.shape;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -11,17 +11,17 @@ import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
 
 /**
- * Segment renderer
+ * Point renderer
  * 
  * @author Daba
  *
  */
-public class SegmentRenderer extends RendererBase<Segment> {
+public class PointRenderer extends RendererBase<Point> {
 	private int vao;
 	private int vboPos;
 	private int vboColor;
 
-	public SegmentRenderer() {
+	public PointRenderer() {
 		this.generateBuffers();
 	}
 	private void generateBuffers() {
@@ -47,34 +47,22 @@ public class SegmentRenderer extends RendererBase<Segment> {
 	}
 	@Override
 	public void updateBuffers() {
-		int numPoints = this.getShapes().size() * 2;
+		int numPoints = this.getShapes().size();
 
 		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numPoints * 3);
 		FloatBuffer colorBuffer = Buffers.newDirectFloatBuffer(numPoints * 4);
 
-		for (Segment segment : this.getShapes()) {
-			Point point1 = segment.getPoint1();
-			Point point2 = segment.getPoint2();
+		for (Point point : this.getShapes()) {
+			Vector pos = point.getPosition();
+			Color color = point.getColor();
 
-			Vector pos1 = point1.getPosition();
-			Vector pos2 = point2.getPosition();
-			Color color1 = point1.getColor();
-			Color color2 = point2.getColor();
-
-			posBuffer.put(pos1.getXFloat());
-			posBuffer.put(pos1.getYFloat());
-			posBuffer.put(pos1.getZFloat());
-			posBuffer.put(pos2.getXFloat());
-			posBuffer.put(pos2.getYFloat());
-			posBuffer.put(pos2.getZFloat());
-			colorBuffer.put(color1.getR());
-			colorBuffer.put(color1.getG());
-			colorBuffer.put(color1.getB());
-			colorBuffer.put(color1.getA());
-			colorBuffer.put(color2.getR());
-			colorBuffer.put(color2.getG());
-			colorBuffer.put(color2.getB());
-			colorBuffer.put(color2.getA());
+			posBuffer.put(pos.getXFloat());
+			posBuffer.put(pos.getYFloat());
+			posBuffer.put(pos.getZFloat());
+			colorBuffer.put(color.getR());
+			colorBuffer.put(color.getG());
+			colorBuffer.put(color.getB());
+			colorBuffer.put(color.getA());
 		}
 		posBuffer.flip();
 		colorBuffer.flip();
@@ -107,13 +95,13 @@ public class SegmentRenderer extends RendererBase<Segment> {
 	public void draw(ShaderProgram program) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		int numPoints = this.getShapes().size() * 2;
+		int numPoints = this.getShapes().size();
 
 		program.enable();
 
 		gl.glBindVertexArray(vao);
 		gl.glEnable(GL3ES3.GL_BLEND);
-		gl.glDrawArrays(GL3ES3.GL_LINES, 0, numPoints);
+		gl.glDrawArrays(GL3ES3.GL_POINTS, 0, numPoints);
 		gl.glDisable(GL3ES3.GL_BLEND);
 		gl.glBindVertexArray(0);
 	}

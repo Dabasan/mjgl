@@ -20,6 +20,7 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 public class MP3Player {
 	private Logger logger = LoggerFactory.getLogger(MP3Player.class);
 
+	private InputStream is;
 	private AdvancedPlayer player;
 	private PlayerThread playerThread;
 
@@ -27,16 +28,16 @@ public class MP3Player {
 		this.constructorBase(is);
 	}
 	public MP3Player(File file) throws IOException {
-		try (var fis = new FileInputStream(file)) {
-			this.constructorBase(fis);
-		}
+		var fis = new FileInputStream(file);
+		this.constructorBase(fis);
 	}
 	public MP3Player(String filepath) throws IOException {
-		try (var fis = new FileInputStream(filepath)) {
-			this.constructorBase(fis);
-		}
+		var fis = new FileInputStream(filepath);
+		this.constructorBase(fis);
 	}
 	private void constructorBase(InputStream is) {
+		this.is = is;
+
 		try {
 			player = new AdvancedPlayer(is);
 		} catch (JavaLayerException e) {
@@ -45,6 +46,11 @@ public class MP3Player {
 	}
 
 	public void close() {
+		try {
+			is.close();
+		} catch (IOException e) {
+			logger.error("Error", e);
+		}
 		player.close();
 	}
 

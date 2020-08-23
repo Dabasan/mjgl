@@ -19,9 +19,20 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.jogamp.joal</groupId>
+			<artifactId>joal-main</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+		<dependency>
 			<groupId>javazoom</groupId>
 			<artifactId>jlayer</artifactId>
 			<version>1.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.dabasan</groupId>
+			<artifactId>ejml-3dtools</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

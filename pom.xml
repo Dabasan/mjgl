@@ -135,5 +135,6 @@
 		<module>mjgl-app</module>
 		<module>mjgl-gl</module>
 		<module>mjgl-math</module>
+		<module>mjgl-al</module>
 	</modules>
 </project>

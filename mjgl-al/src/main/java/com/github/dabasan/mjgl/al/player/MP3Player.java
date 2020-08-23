@@ -23,21 +23,25 @@ public class MP3Player {
 	private AdvancedPlayer player;
 	private PlayerThread playerThread;
 
-	public MP3Player(InputStream is) throws JavaLayerException {
+	public MP3Player(InputStream is) {
 		this.constructorBase(is);
 	}
-	public MP3Player(File file) throws IOException, JavaLayerException {
+	public MP3Player(File file) throws IOException {
 		try (var fis = new FileInputStream(file)) {
 			this.constructorBase(fis);
 		}
 	}
-	public MP3Player(String filepath) throws IOException, JavaLayerException {
+	public MP3Player(String filepath) throws IOException {
 		try (var fis = new FileInputStream(filepath)) {
 			this.constructorBase(fis);
 		}
 	}
-	private void constructorBase(InputStream is) throws JavaLayerException {
-		player = new AdvancedPlayer(is);
+	private void constructorBase(InputStream is) {
+		try {
+			player = new AdvancedPlayer(is);
+		} catch (JavaLayerException e) {
+			logger.error("Error", e);
+		}
 	}
 
 	public void close() {

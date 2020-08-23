@@ -64,6 +64,18 @@ public class WindowBase implements GLEventListener {
 
 	@Override
 	public void init(GLAutoDrawable drawable) {
+		GL2ES2 gl = drawable.getGL().getGL2ES2();
+
+		// Depth test
+		gl.glEnable(GL2ES2.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL2ES2.GL_LESS);
+		// Cull face
+		gl.glEnable(GL2ES2.GL_CULL_FACE);
+		gl.glCullFace(GL2ES2.GL_BACK);
+		// Blend
+		gl.glEnable(GL2ES2.GL_BLEND);
+		gl.glBlendFunc(GL2ES2.GL_SRC_ALPHA, GL2ES2.GL_ONE_MINUS_SRC_ALPHA);
+
 		this.init();
 		logger.info("Init");
 	}

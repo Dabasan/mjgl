@@ -64,6 +64,8 @@ public class WindowBase implements GLEventListener {
 
 	@Override
 	public void init(GLAutoDrawable drawable) {
+		GLLock.lock();
+
 		GL2ES2 gl = drawable.getGL().getGL2ES2();
 
 		// Depth test
@@ -78,25 +80,36 @@ public class WindowBase implements GLEventListener {
 
 		this.init();
 		logger.info("Init");
+
+		GLLock.unlock();
 	}
 	@Override
 	public void dispose(GLAutoDrawable drawable) {
+		GLLock.lock();
 		this.dispose();
 		logger.info("Dispose");
+		GLLock.unlock();
 	}
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		GLLock.lock();
 		this.reshape(x, y, width, height);
+		GLLock.unlock();
 	}
 	@Override
 	public void display(GLAutoDrawable drawable) {
+		keyboard.update();
+		mouse.update();
+
+		GLLock.lock();
+
 		GL2ES2 gl = drawable.getGL().getGL2ES2();
 		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT
 				| GL2ES2.GL_STENCIL_BUFFER_BIT);
-
-		keyboard.update();
-		mouse.update();
 		this.update();
+
+		GLLock.unlock();
+
 		mouse.resetWheelRotations();
 	}
 

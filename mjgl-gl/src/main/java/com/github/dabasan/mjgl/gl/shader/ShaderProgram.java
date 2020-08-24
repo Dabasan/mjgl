@@ -192,12 +192,12 @@ public class ShaderProgram {
 		texture.bind(gl);
 		gl.glUniform1i(location, textureUnit);
 	}
-	public void setTexture(String name, int textureUnit, int textureTarget, int textureID) {
+	public void setTexture(String name, int textureUnit, int textureTarget, int texture) {
 		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glActiveTexture(GL2ES2.GL_TEXTURE0 + textureUnit);
-		gl.glBindTexture(textureTarget, textureID);
+		gl.glBindTexture(textureTarget, texture);
 		gl.glUniform1i(location, textureUnit);
 	}
 }

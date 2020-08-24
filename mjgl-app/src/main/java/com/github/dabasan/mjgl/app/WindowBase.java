@@ -79,16 +79,18 @@ public class WindowBase implements GLEventListener {
 		gl.glBlendFunc(GL2ES2.GL_SRC_ALPHA, GL2ES2.GL_ONE_MINUS_SRC_ALPHA);
 
 		this.init();
-		logger.info("Init");
 
 		GLLock.unlock();
+
+		logger.info("Init");
 	}
 	@Override
 	public void dispose(GLAutoDrawable drawable) {
 		GLLock.lock();
 		this.dispose();
-		logger.info("Dispose");
 		GLLock.unlock();
+
+		logger.info("Dispose");
 	}
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {

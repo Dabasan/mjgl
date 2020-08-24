@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.util;
+package com.github.dabasan.mjgl.gl.util.asset;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;

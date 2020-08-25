@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.scene.camera;
+package com.github.dabasan.mjgl.math;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
@@ -9,7 +9,7 @@ import com.github.dabasan.ejml_3dtools.Vector;
  * @author Daba
  *
  */
-class MatrixFunctions {
+public class MatrixFunctions {
 	public static Matrix getViewTransformationMatrix(Vector position, Vector target, Vector up) {
 		var mTranslation = Matrix.createTranslationMatrix(position.getX() * (-1.0),
 				position.getY() * (-1.0), position.getZ() * (-1.0));

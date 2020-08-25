@@ -2,6 +2,7 @@ package com.github.dabasan.mjgl.gl.scene.camera;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
+import com.github.dabasan.mjgl.math.MatrixFunctions;
 
 /**
  * Orthographic camera

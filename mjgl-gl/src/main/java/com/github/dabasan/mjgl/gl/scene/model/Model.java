@@ -241,7 +241,9 @@ public class Model extends Node {
 
 		int numBuffers = buffers.size();
 
-		gBuffer.enable();
+		if (gBuffer != null) {
+			gBuffer.enable();
+		}
 		program.enable();
 		for (int i = 0; i < numBuffers; i++) {
 			ModelBuffer buffer = buffers.get(i);

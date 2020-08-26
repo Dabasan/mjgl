@@ -13,7 +13,7 @@ struct Fog{
     vec4 color;
 };
 struct ParallelLight{
-    vec3 direction;
+    vec3 target;
     vec4 colorAmbient;
     vec4 colorDiffuse;
     vec4 colorSpecular;
@@ -35,9 +35,10 @@ layout(location=0) out vec4 fsOutColor;
 void main(){
     //Lighting
     vec3 cameraDirection=normalize(camera.target-camera.position);
-    vec3 halfLE=-normalize(cameraDirection+light.direction);
+    vec3 lightDirection=normalize(light.target-light.position);
+    vec3 halfLE=-normalize(cameraDirection+lightDirection);
 
-    float coefDiffuse=clamp(dot(vsOutNormal,-light.direction),0.0,1.0);
+    float coefDiffuse=clamp(dot(vsOutNormal,-lightDirection),0.0,1.0);
     float coefSpecular=pow(clamp(dot(vsOutNormal,halfLE),0.0,1.0),2.0);
 
     vec4 colorAmbient=vec4(light.colorAmbient*light.powerAmbient);

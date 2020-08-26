@@ -13,7 +13,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  *
  */
 public class ParallelLight extends Node implements IUpdatable {
-	private Vector direction;
+	private Vector target;
 	private Color colorAmbient;
 	private Color colorDiffuse;
 	private Color colorSpecular;
@@ -22,7 +22,7 @@ public class ParallelLight extends Node implements IUpdatable {
 	private double powerSpecular;
 
 	public ParallelLight() {
-		direction = new Vector(1.0, -1.0, 1.0).normalize();
+		target = new Vector(0.0, 0.0, 0.0);
 		colorAmbient = Color.WHITE;
 		colorDiffuse = Color.WHITE;
 		colorSpecular = Color.WHITE;
@@ -31,8 +31,8 @@ public class ParallelLight extends Node implements IUpdatable {
 		powerSpecular = 0.1;
 	}
 
-	public Vector getDirection() {
-		return direction;
+	public Vector getTarget() {
+		return target;
 	}
 	public Color getColorAmbient() {
 		return colorAmbient;
@@ -53,8 +53,8 @@ public class ParallelLight extends Node implements IUpdatable {
 		return powerSpecular;
 	}
 
-	public void setDirection(Vector direction) {
-		this.direction = direction;
+	public void setTarget(Vector target) {
+		this.target = target;
 	}
 	public void setColorAmbient(Color colorAmbient) {
 		this.colorAmbient = colorAmbient;
@@ -78,7 +78,7 @@ public class ParallelLight extends Node implements IUpdatable {
 	@Override
 	public void update(ShaderProgram program) {
 		program.enable();
-		program.setUniform("light.direction", direction);
+		program.setUniform("light.target", target);
 		program.setUniform("light.colorAmbient", colorAmbient);
 		program.setUniform("light.colorDiffuse", colorDiffuse);
 		program.setUniform("light.colorSpecular", colorSpecular);

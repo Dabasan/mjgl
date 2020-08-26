@@ -2,6 +2,9 @@ package com.github.dabasan.mjgl.gl.effect;
 
 import java.nio.IntBuffer;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
@@ -13,6 +16,8 @@ import com.jogamp.opengl.GLContext;
  *
  */
 public class GBuffer {
+	private Logger logger = LoggerFactory.getLogger(GBuffer.class);
+
 	private int fbo;
 	private int texColor;
 	private int texNormal;
@@ -64,9 +69,13 @@ public class GBuffer {
 				GL3ES3.GL_TEXTURE_2D, texNormal, 0);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT2,
 				GL3ES3.GL_TEXTURE_2D, texPosition, 0);
-		IntBuffer draw_buffers = Buffers.newDirectIntBuffer(new int[]{GL3ES3.GL_COLOR_ATTACHMENT0,
+		IntBuffer drawBuffers = Buffers.newDirectIntBuffer(new int[]{GL3ES3.GL_COLOR_ATTACHMENT0,
 				GL3ES3.GL_COLOR_ATTACHMENT1, GL3ES3.GL_COLOR_ATTACHMENT2});
-		gl.glDrawBuffers(1, draw_buffers);
+		gl.glDrawBuffers(drawBuffers.capacity(), drawBuffers);
+		int status = gl.glCheckFramebufferStatus(GL3ES3.GL_FRAMEBUFFER);
+		if (status != GL3ES3.GL_FRAMEBUFFER_COMPLETE) {
+			logger.error("Incomplete framebuffer. status={}", status);
+		}
 		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
 	}
 

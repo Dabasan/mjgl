@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.scene.lighting;
+package com.github.dabasan.mjgl.gl.scene.light;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
@@ -6,12 +6,12 @@ import com.github.dabasan.mjgl.gl.scene.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
- * Lighting
+ * Light
  * 
  * @author Daba
  *
  */
-public class Lighting implements IUpdatable {
+public class Light implements IUpdatable {
 	private Vector direction;
 	private Color colorAmbient;
 	private Color colorDiffuse;
@@ -20,7 +20,7 @@ public class Lighting implements IUpdatable {
 	private double powerDiffuse;
 	private double powerSpecular;
 
-	public Lighting() {
+	public Light() {
 		direction = new Vector(1.0, -1.0, 1.0).normalize();
 		colorAmbient = Color.WHITE;
 		colorDiffuse = Color.WHITE;
@@ -77,12 +77,12 @@ public class Lighting implements IUpdatable {
 	@Override
 	public void update(ShaderProgram program) {
 		program.enable();
-		program.setUniform("lighting.direction", direction);
-		program.setUniform("lighting.colorAmbient", colorAmbient);
-		program.setUniform("lighting.colorDiffuse", colorDiffuse);
-		program.setUniform("lighting.colorSpecular", colorSpecular);
-		program.setUniform("lighting.powerAmbient", powerAmbient);
-		program.setUniform("lighting.powerDiffuse", powerDiffuse);
-		program.setUniform("lighting.powerSpecular", powerSpecular);
+		program.setUniform("light.direction", direction);
+		program.setUniform("light.colorAmbient", colorAmbient);
+		program.setUniform("light.colorDiffuse", colorDiffuse);
+		program.setUniform("light.colorSpecular", colorSpecular);
+		program.setUniform("light.powerAmbient", powerAmbient);
+		program.setUniform("light.powerDiffuse", powerDiffuse);
+		program.setUniform("light.powerSpecular", powerSpecular);
 	}
 }

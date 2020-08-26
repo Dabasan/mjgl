@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.effect;
+package com.github.dabasan.mjgl.gl;
 
 import java.nio.IntBuffer;
 
@@ -19,9 +19,9 @@ public class GBuffer {
 	private Logger logger = LoggerFactory.getLogger(GBuffer.class);
 
 	private int fbo;
-	private int texColor;
-	private int texNormal;
+	private int texAlbedo;
 	private int texPosition;
+	private int texNormal;
 
 	private int bufferWidth;
 	private int bufferHeight;
@@ -38,9 +38,9 @@ public class GBuffer {
 
 		IntBuffer textures = Buffers.newDirectIntBuffer(3);
 		gl.glGenTextures(textures.capacity(), textures);
-		texColor = textures.get(0);
-		texNormal = textures.get(1);
-		texPosition = textures.get(2);
+		texAlbedo = textures.get(0);
+		texPosition = textures.get(1);
+		texNormal = textures.get(2);
 
 		for (int i = 0; i < textures.capacity(); i++) {
 			gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, textures.get(i));
@@ -64,11 +64,11 @@ public class GBuffer {
 
 		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, fbo);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT0,
-				GL3ES3.GL_TEXTURE_2D, texColor, 0);
-		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT1,
-				GL3ES3.GL_TEXTURE_2D, texNormal, 0);
+				GL3ES3.GL_TEXTURE_2D, texAlbedo, 0);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT2,
 				GL3ES3.GL_TEXTURE_2D, texPosition, 0);
+		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT1,
+				GL3ES3.GL_TEXTURE_2D, texNormal, 0);
 		IntBuffer drawBuffers = Buffers.newDirectIntBuffer(new int[]{GL3ES3.GL_COLOR_ATTACHMENT0,
 				GL3ES3.GL_COLOR_ATTACHMENT1, GL3ES3.GL_COLOR_ATTACHMENT2});
 		gl.glDrawBuffers(drawBuffers.capacity(), drawBuffers);
@@ -89,14 +89,14 @@ public class GBuffer {
 	protected int getFBO() {
 		return fbo;
 	}
-	protected int getTexColor() {
-		return texColor;
-	}
-	protected int getTexNormal() {
-		return texNormal;
+	protected int getTexAlbedo() {
+		return texAlbedo;
 	}
 	protected int getTexPosition() {
 		return texPosition;
+	}
+	protected int getTexNormal() {
+		return texNormal;
 	}
 
 	public void enable() {
@@ -108,5 +108,18 @@ public class GBuffer {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 		gl.glClear(GL3ES3.GL_DEPTH_BUFFER_BIT | GL3ES3.GL_COLOR_BUFFER_BIT
 				| GL3ES3.GL_STENCIL_BUFFER_BIT);
+	}
+
+	public void bindTexAlbedo() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texAlbedo);
+	}
+	public void bindTexPosition() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texPosition);
+	}
+	public void bindTexNormal() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texNormal);
 	}
 }

@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.effect;
+package com.github.dabasan.mjgl.gl;
 
 import java.nio.IntBuffer;
 

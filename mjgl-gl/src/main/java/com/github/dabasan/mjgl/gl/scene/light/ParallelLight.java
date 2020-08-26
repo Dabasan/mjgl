@@ -3,6 +3,7 @@ package com.github.dabasan.mjgl.gl.scene.light;
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
 import com.github.dabasan.mjgl.gl.scene.IUpdatable;
+import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
@@ -11,7 +12,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-public class Light implements IUpdatable {
+public class ParallelLight extends Node implements IUpdatable {
 	private Vector direction;
 	private Color colorAmbient;
 	private Color colorDiffuse;
@@ -20,7 +21,7 @@ public class Light implements IUpdatable {
 	private double powerDiffuse;
 	private double powerSpecular;
 
-	public Light() {
+	public ParallelLight() {
 		direction = new Vector(1.0, -1.0, 1.0).normalize();
 		colorAmbient = Color.WHITE;
 		colorDiffuse = Color.WHITE;

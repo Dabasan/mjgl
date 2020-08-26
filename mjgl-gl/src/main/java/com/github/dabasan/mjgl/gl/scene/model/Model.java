@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
+import com.github.dabasan.mjgl.gl.GBuffer;
 import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.jogamp.common.nio.Buffers;
@@ -231,7 +232,7 @@ public class Model extends Node {
 		return buffers.size();
 	}
 
-	public void draw(ShaderProgram program, String samplerName, int textureUnit) {
+	public void draw(ShaderProgram program, GBuffer gBuffer, String samplerName, int textureUnit) {
 		if (propertyUpdated == true) {
 			this.updateBuffers();
 		}
@@ -240,6 +241,7 @@ public class Model extends Node {
 
 		int numBuffers = buffers.size();
 
+		gBuffer.enable();
 		program.enable();
 		for (int i = 0; i < numBuffers; i++) {
 			ModelBuffer buffer = buffers.get(i);
@@ -259,8 +261,8 @@ public class Model extends Node {
 			gl.glBindVertexArray(vaoBuffers.get(0));
 		}
 	}
-	public void draw(ShaderProgram program) {
-		this.draw(program, "textureSampler", 0);
+	public void draw(ShaderProgram program, GBuffer gBuffer) {
+		this.draw(program, gBuffer, "textureSampler", 0);
 	}
 
 	public void transfer(ShaderProgram program) {

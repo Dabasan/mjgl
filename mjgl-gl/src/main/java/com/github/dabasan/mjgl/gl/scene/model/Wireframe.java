@@ -94,7 +94,7 @@ public class Wireframe extends Node {
 			gl.glBindVertexArray(0);
 		}
 	}
-	public void updateBuffers() {
+	public void update() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numBuffers = buffers.size();
@@ -114,7 +114,7 @@ public class Wireframe extends Node {
 
 		propertyUpdated = false;
 	}
-	public void deleteBuffers(boolean deleteTextures) {
+	public void dispose(boolean deleteTextures) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numBuffers = buffers.size();
@@ -165,7 +165,7 @@ public class Wireframe extends Node {
 
 	public void draw(ShaderProgram program) {
 		if (propertyUpdated == true) {
-			this.updateBuffers();
+			this.update();
 		}
 
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();

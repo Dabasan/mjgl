@@ -45,7 +45,7 @@ public class CapsuleRenderer extends RendererBase<Capsule> {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
@@ -54,7 +54,7 @@ public class CapsuleRenderer extends RendererBase<Capsule> {
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
-	public void updateBuffers() {
+	public void update() {
 		var indexValues = new ArrayList<Integer>();
 		var posValues = new ArrayList<Float>();
 		var colorValues = new ArrayList<Float>();

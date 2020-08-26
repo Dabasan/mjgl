@@ -36,7 +36,7 @@ public class Segment2DRenderer extends RendererBase<Segment2D> {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
@@ -45,7 +45,7 @@ public class Segment2DRenderer extends RendererBase<Segment2D> {
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
-	public void updateBuffers() {
+	public void update() {
 		int numPoints = this.getShapes().size() * 2;
 
 		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numPoints * 2);

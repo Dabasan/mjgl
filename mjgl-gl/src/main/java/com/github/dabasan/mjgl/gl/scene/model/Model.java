@@ -186,7 +186,7 @@ public class Model extends Node {
 			gl.glBindVertexArray(0);
 		}
 	}
-	public void updateBuffers() {
+	public void update() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numBuffers = buffers.size();
@@ -211,7 +211,7 @@ public class Model extends Node {
 
 		propertyUpdated = false;
 	}
-	public void deleteBuffers(boolean deleteTextures) {
+	public void dispose(boolean deleteTextures) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int numBuffers = buffers.size();
@@ -234,7 +234,7 @@ public class Model extends Node {
 
 	public void draw(ShaderProgram program, GBuffer gBuffer, String samplerName, int textureUnit) {
 		if (propertyUpdated == true) {
-			this.updateBuffers();
+			this.update();
 		}
 
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
@@ -269,7 +269,7 @@ public class Model extends Node {
 
 	public void transfer(ShaderProgram program) {
 		if (propertyUpdated == true) {
-			this.updateBuffers();
+			this.update();
 		}
 
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();

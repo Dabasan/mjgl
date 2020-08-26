@@ -171,7 +171,7 @@ public class QuadTransferrerWithUV implements ITransferrer {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffer = Buffers.newDirectIntBuffer(new int[]{vao});

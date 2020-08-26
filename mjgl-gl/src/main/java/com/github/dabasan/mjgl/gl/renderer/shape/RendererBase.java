@@ -34,7 +34,7 @@ public abstract class RendererBase<T> {
 		shapes.clear();
 	}
 
-	public abstract void deleteBuffers();
-	public abstract void updateBuffers();
+	public abstract void dispose();
+	public abstract void update();
 	public abstract void draw(ShaderProgram program);
 }

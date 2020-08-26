@@ -7,6 +7,6 @@ package com.github.dabasan.mjgl.gl.transferrer;
  *
  */
 public interface ITransferrer {
-	void deleteBuffers();
+	void dispose();
 	void transfer();
 }

@@ -43,7 +43,7 @@ public class Circle2DRenderer extends RendererBase<Circle2D> {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
@@ -52,7 +52,7 @@ public class Circle2DRenderer extends RendererBase<Circle2D> {
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
-	public void updateBuffers() {
+	public void update() {
 		var indexValues = new ArrayList<Integer>();
 		var points = new ArrayList<Point2D>();
 

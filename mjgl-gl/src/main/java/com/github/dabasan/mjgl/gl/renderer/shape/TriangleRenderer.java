@@ -63,7 +63,7 @@ public class TriangleRenderer extends RendererBase<Triangle> {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
@@ -72,7 +72,7 @@ public class TriangleRenderer extends RendererBase<Triangle> {
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
-	public void updateBuffers() {
+	public void update() {
 		int numVertices = this.getShapes().size() * 3;
 
 		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numVertices * 3);

@@ -37,7 +37,7 @@ public class PointRenderer extends RendererBase<Point> {
 	}
 
 	@Override
-	public void deleteBuffers() {
+	public void dispose() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		IntBuffer vaoBuffers = Buffers.newDirectIntBuffer(new int[]{vao});
@@ -46,7 +46,7 @@ public class PointRenderer extends RendererBase<Point> {
 		gl.glDeleteBuffers(vboBuffers.capacity(), vboBuffers);
 	}
 	@Override
-	public void updateBuffers() {
+	public void update() {
 		int numPoints = this.getShapes().size();
 
 		FloatBuffer posBuffer = Buffers.newDirectFloatBuffer(numPoints * 3);

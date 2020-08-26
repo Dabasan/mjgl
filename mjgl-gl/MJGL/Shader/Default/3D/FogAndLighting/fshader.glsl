@@ -12,7 +12,7 @@ struct Fog{
     float end;
     vec4 color;
 };
-struct Light{
+struct ParallelLight{
     vec3 direction;
     vec4 colorAmbient;
     vec4 colorDiffuse;
@@ -24,7 +24,7 @@ struct Light{
 
 uniform Camera camera;
 uniform Fog fog;
-uniform Light light;
+uniform ParallelLight light;
 uniform sampler2D textureSampler;
 
 in vec3 vsOutPosition;

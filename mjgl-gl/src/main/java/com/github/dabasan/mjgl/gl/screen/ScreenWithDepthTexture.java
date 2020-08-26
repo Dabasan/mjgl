@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.util.screen;
+package com.github.dabasan.mjgl.gl.screen;
 
 import java.nio.IntBuffer;
 

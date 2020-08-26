@@ -45,7 +45,7 @@ void main(){
     vec4 colorSpecular=vec4(light.colorSpecular*light.powerSpecular*coefSpecular);
 
     vec4 colorPostLighting=colorAmbient+colorDiffuse+colorSpecular;
-    colorPostlight.a=1.0;
+    colorPostlighting.a=1.0;
 
     //Fog
     float linearPos=length(camera.position-vsOutPosition);

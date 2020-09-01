@@ -42,16 +42,31 @@ public class GBuffer {
 		texPosition = textures.get(1);
 		texNormal = textures.get(2);
 
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texAlbedo);
+		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_R32F, bufferWidth, bufferHeight, 0,
+				GL3ES3.GL_RED, GL3ES3.GL_FLOAT, null);
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
+
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texPosition);
+		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
+				GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
+
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texNormal);
+		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
+				GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
+
 		for (int i = 0; i < 3; i++) {
 			gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, textures.get(i));
-			gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
-					GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
 			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MAG_FILTER,
 					GL3ES3.GL_NEAREST);
 			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MIN_FILTER,
 					GL3ES3.GL_NEAREST);
-			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_WRAP_S, GL3ES3.GL_REPEAT);
-			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_WRAP_T, GL3ES3.GL_REPEAT);
+			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_WRAP_S,
+					GL3ES3.GL_CLAMP_TO_EDGE);
+			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_WRAP_T,
+					GL3ES3.GL_CLAMP_TO_EDGE);
 			gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
 		}
 	}

@@ -10,16 +10,16 @@ import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.texture.Texture;
 
 /**
- * Model rendered with forward rendering
+ * Model
  * 
  * @author Daba
  *
  */
-public class ForwardModel extends ModelBase {
-	public ForwardModel(List<ModelBuffer> buffers, FlipVOption option) {
+public class Model extends ModelBase {
+	public Model(List<ModelBuffer> buffers, FlipVOption option) {
 		super(buffers, option);
 	}
-	public ForwardModel(String modelFilepath, FlipVOption option) throws IOException {
+	public Model(String modelFilepath, FlipVOption option) throws IOException {
 		super(modelFilepath, option);
 	}
 

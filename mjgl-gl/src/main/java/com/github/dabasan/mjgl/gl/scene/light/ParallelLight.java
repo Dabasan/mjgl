@@ -78,6 +78,7 @@ public class ParallelLight extends Node implements IUpdatable {
 	@Override
 	public void update(ShaderProgram program) {
 		program.enable();
+		program.setUniform("light.position", this.getPosition());
 		program.setUniform("light.target", target);
 		program.setUniform("light.colorAmbient", colorAmbient);
 		program.setUniform("light.colorDiffuse", colorDiffuse);

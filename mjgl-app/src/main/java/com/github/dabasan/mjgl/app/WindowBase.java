@@ -61,6 +61,18 @@ public class WindowBase implements GLEventListener {
 	public int getMouseCountReleasing(MouseCode code) {
 		return mouse.getCountReleasing(code);
 	}
+	public int getCursorPosX() {
+		return mouse.getCursorPosX();
+	}
+	public int getCursorPosY() {
+		return mouse.getCursorPosY();
+	}
+	public int getCursorDiffX() {
+		return mouse.getCursorDiffX();
+	}
+	public int getCursorDiffY() {
+		return mouse.getCursorDiffY();
+	}
 
 	@Override
 	public void init(GLAutoDrawable drawable) {

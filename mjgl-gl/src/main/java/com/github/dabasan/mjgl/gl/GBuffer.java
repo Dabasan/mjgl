@@ -107,6 +107,17 @@ public class GBuffer {
 		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
 	}
 
+	public void dispose() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		IntBuffer fbos = Buffers.newDirectIntBuffer(new int[]{fbo});
+		IntBuffer textures = Buffers
+				.newDirectIntBuffer(new int[]{texAlbedo, texPosition, texUV, texNormal});
+
+		gl.glDeleteFramebuffers(fbos.capacity(), fbos);
+		gl.glDeleteTextures(textures.capacity(), textures);
+	}
+
 	public int getBufferWidth() {
 		return bufferWidth;
 	}

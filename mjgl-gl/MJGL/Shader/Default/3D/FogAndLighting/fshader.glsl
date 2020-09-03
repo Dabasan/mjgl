@@ -13,6 +13,7 @@ struct Fog{
     vec4 color;
 };
 struct ParallelLight{
+    vec3 position;
     vec3 target;
     vec4 colorAmbient;
     vec4 colorDiffuse;
@@ -46,7 +47,7 @@ void main(){
     vec4 colorSpecular=vec4(light.colorSpecular*light.powerSpecular*coefSpecular);
 
     vec4 colorPostLighting=colorAmbient+colorDiffuse+colorSpecular;
-    colorPostlighting.a=1.0;
+    colorPostLighting.a=1.0;
 
     //Fog
     float linearPos=length(camera.position-vsOutPosition);

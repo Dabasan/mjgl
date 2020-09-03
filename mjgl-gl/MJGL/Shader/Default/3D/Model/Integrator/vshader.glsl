@@ -6,6 +6,5 @@ out vec2 vsOutUV;
 
 void main(){
     gl_Position=vec4(vsInPosition,0.0,1.0);
-    vsOutPosition=vsInPosition;
     vsOutUV=vsInUV;
 }

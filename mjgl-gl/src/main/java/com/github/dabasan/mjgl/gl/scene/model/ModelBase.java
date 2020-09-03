@@ -20,7 +20,7 @@ import com.jogamp.opengl.util.texture.Texture;
  * @author Daba
  *
  */
-public abstract class ModelBase extends Node {
+abstract class ModelBase extends Node {
 	private List<ModelBuffer> buffers;
 	private boolean propertyUpdated;
 

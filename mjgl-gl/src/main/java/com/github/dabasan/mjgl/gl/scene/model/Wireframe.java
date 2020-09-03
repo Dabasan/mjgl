@@ -188,7 +188,7 @@ public class Wireframe extends Node {
 		}
 	}
 
-	public void transform(Matrix m) {
+	public Wireframe transform(Matrix m) {
 		super.transform(m);
 
 		for (var buffer : buffers) {
@@ -220,43 +220,57 @@ public class Wireframe extends Node {
 		}
 
 		propertyUpdated = true;
+
+		return this;
 	}
-	public void translate(Vector translation) {
+	public Wireframe translate(Vector translation) {
 		super.translate(translation);
 
 		var mTranslation = Matrix.createTranslationMatrix(translation.getX(), translation.getY(),
 				translation.getZ());
 		this.transform(mTranslation);
+
+		return this;
 	}
-	public void rescale(Vector scale) {
+	public Wireframe rescale(Vector scale) {
 		super.rescale(scale);
 
 		var mScaling = Matrix.createScalingMatrix(scale.getX(), scale.getY(), scale.getZ());
 		this.transform(mScaling);
+
+		return this;
 	}
-	public void rotX(double th) {
+	public Wireframe rotX(double th) {
 		super.rotX(th);
 
 		var mRotX = Matrix.createRotationXMatrix(th);
 		this.transform(mRotX);
+
+		return this;
 	}
-	public void rotY(double th) {
+	public Wireframe rotY(double th) {
 		super.rotY(th);
 
 		var mRotY = Matrix.createRotationYMatrix(th);
 		this.transform(mRotY);
+
+		return this;
 	}
-	public void rotZ(double th) {
+	public Wireframe rotZ(double th) {
 		super.rotZ(th);
 
 		var mRotZ = Matrix.createRotationZMatrix(th);
 		this.transform(mRotZ);
+
+		return this;
 	}
-	public void rot(Vector axis, double th) {
+	public Wireframe rot(Vector axis, double th) {
 		super.rot(axis, th);
 
 		var mRot = Matrix.createRotationMatrix(axis.getX(), axis.getY(), axis.getZ(), th);
 		this.transform(mRot);
+
+		return this;
 	}
 
 	public List<ModelBuffer> getBuffers() {

@@ -40,7 +40,7 @@ void main(){
 
     vec4 sumColorPostLighting=vec4(0.0);
 
-    int boundNumLights=max(numLights,MAX_NUM_LIGHTS);
+    int boundNumLights=min(numLights,MAX_NUM_LIGHTS);
     for(int i=0;i<boundNumLights;i++){
         vec3 halfLE=-normalize(cameraDirection+lightDirection);
 

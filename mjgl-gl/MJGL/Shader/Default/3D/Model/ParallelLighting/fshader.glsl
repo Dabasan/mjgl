@@ -3,6 +3,7 @@
 struct GBuffer{
     sampler2D texAlbedo;
     sampler2D texPosition;
+    sampler2D texUV;
     sampler2D texNormal;
 };
 uniform GBuffer gBuffer;
@@ -57,4 +58,7 @@ void main(){
     }
 
     fsOutFactor=sumColorPostLighting.xyz;
+    
+    float albedo=texture(gBuffer.texAlbedo,vsOutUV).r;
+    fsOutFactor*=albedo;
 }

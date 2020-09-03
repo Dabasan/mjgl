@@ -1,6 +1,7 @@
 package com.github.dabasan.mjgl.gl.scene.camera;
 
 import com.github.dabasan.ejml_3dtools.Vector;
+import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.github.dabasan.mjgl.math.MathFunctions;
 
 /**
@@ -96,5 +97,14 @@ public class FreeCamera extends PerspectiveCamera {
 		} else if (angleH > Math.PI) {
 			angleH -= Math.PI * 2.0f;
 		}
+	}
+
+	@Override
+	public void update(ShaderProgram program) {
+		var direction = new Vector(angleV, angleH);
+		var target = this.getPosition().add(direction);
+		this.setTarget(target);
+
+		super.update(program);
 	}
 }

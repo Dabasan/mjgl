@@ -40,54 +40,70 @@ public class Node {
 		nodes.remove(node);
 	}
 
-	public void translate(Vector translation) {
+	public Node translate(Vector translation) {
 		position = position.add(translation);
 		for (var node : nodes) {
 			node.translate(translation);
 		}
+
+		return this;
 	}
-	public void rescale(Vector scale) {
+	public Node rescale(Vector scale) {
 		var mScaling = Matrix.createScalingMatrix(scale.getX(), scale.getY(), scale.getZ());
 
 		position = position.transform(mScaling);
 		for (var node : nodes) {
 			node.rescale(scale);
 		}
+
+		return this;
 	}
-	public void rotX(double th) {
+	public Node rotX(double th) {
 		position = position.rotX(th);
 		for (var node : nodes) {
 			node.rotX(th);
 		}
+
+		return this;
 	}
-	public void rotY(double th) {
+	public Node rotY(double th) {
 		position = position.rotY(th);
 		for (var node : nodes) {
 			node.rotY(th);
 		}
+
+		return this;
 	}
-	public void rotZ(double th) {
+	public Node rotZ(double th) {
 		position = position.rotZ(th);
 		for (var node : nodes) {
 			node.rotZ(th);
 		}
+
+		return this;
 	}
-	public void rot(Vector axis, double th) {
+	public Node rot(Vector axis, double th) {
 		position = position.rot(axis.getX(), axis.getY(), axis.getZ(), th);
 		for (var node : nodes) {
 			node.rot(axis, th);
 		}
+
+		return this;
 	}
-	public void transform(Matrix m) {
+	public Node transform(Matrix m) {
 		position = position.transform(m);
 		for (var node : nodes) {
 			node.transform(m);
 		}
+
+		return this;
 	}
-	public void transformSR(Matrix m) {
+	public Node transformSR(Matrix m) {
 		position = position.transformSR(m);
 		for (var node : nodes) {
 			node.transformSR(m);
 		}
+
+		return this;
 	}
 }

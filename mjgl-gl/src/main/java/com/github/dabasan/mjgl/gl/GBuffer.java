@@ -19,9 +19,8 @@ public class GBuffer {
 	private Logger logger = LoggerFactory.getLogger(GBuffer.class);
 
 	private int fbo;
-	private int texAlbedo;
+	private int texColor;
 	private int texPosition;
-	private int texUV;
 	private int texNormal;
 
 	private int bufferWidth;
@@ -37,35 +36,16 @@ public class GBuffer {
 	private void setupTextures() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		IntBuffer textures = Buffers.newDirectIntBuffer(4);
+		IntBuffer textures = Buffers.newDirectIntBuffer(3);
 		gl.glGenTextures(textures.capacity(), textures);
-		texAlbedo = textures.get(0);
+		texColor = textures.get(0);
 		texPosition = textures.get(1);
-		texUV = textures.get(2);
-		texNormal = textures.get(3);
+		texNormal = textures.get(2);
 
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texAlbedo);
-		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_R32F, bufferWidth, bufferHeight, 0,
-				GL3ES3.GL_RED, GL3ES3.GL_FLOAT, null);
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
-
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texPosition);
-		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
-				GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
-
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texUV);
-		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RG32F, bufferWidth, bufferHeight, 0,
-				GL3ES3.GL_RG, GL3ES3.GL_FLOAT, null);
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
-
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texNormal);
-		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
-				GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
-
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, textures.get(i));
+			gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
+					GL3ES3.GL_RED, GL3ES3.GL_FLOAT, null);
 			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MAG_FILTER,
 					GL3ES3.GL_NEAREST);
 			gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MIN_FILTER,
@@ -86,17 +66,14 @@ public class GBuffer {
 
 		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, fbo);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT0,
-				GL3ES3.GL_TEXTURE_2D, texAlbedo, 0);
+				GL3ES3.GL_TEXTURE_2D, texColor, 0);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT1,
 				GL3ES3.GL_TEXTURE_2D, texPosition, 0);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT2,
-				GL3ES3.GL_TEXTURE_2D, texUV, 0);
-		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT3,
 				GL3ES3.GL_TEXTURE_2D, texNormal, 0);
 
-		IntBuffer drawBuffers = Buffers.newDirectIntBuffer(
-				new int[]{GL3ES3.GL_COLOR_ATTACHMENT0, GL3ES3.GL_COLOR_ATTACHMENT1,
-						GL3ES3.GL_COLOR_ATTACHMENT2, GL3ES3.GL_COLOR_ATTACHMENT3});
+		IntBuffer drawBuffers = Buffers.newDirectIntBuffer(new int[]{GL3ES3.GL_COLOR_ATTACHMENT0,
+				GL3ES3.GL_COLOR_ATTACHMENT1, GL3ES3.GL_COLOR_ATTACHMENT2});
 		gl.glDrawBuffers(drawBuffers.capacity(), drawBuffers);
 
 		int status = gl.glCheckFramebufferStatus(GL3ES3.GL_FRAMEBUFFER);
@@ -112,7 +89,7 @@ public class GBuffer {
 
 		IntBuffer fbos = Buffers.newDirectIntBuffer(new int[]{fbo});
 		IntBuffer textures = Buffers
-				.newDirectIntBuffer(new int[]{texAlbedo, texPosition, texUV, texNormal});
+				.newDirectIntBuffer(new int[]{texColor, texPosition, texNormal});
 
 		gl.glDeleteFramebuffers(fbos.capacity(), fbos);
 		gl.glDeleteTextures(textures.capacity(), textures);
@@ -128,8 +105,8 @@ public class GBuffer {
 	protected int getFBO() {
 		return fbo;
 	}
-	public int getTexAlbedo() {
-		return texAlbedo;
+	public int getTexColor() {
+		return texColor;
 	}
 	public int getTexPosition() {
 		return texPosition;
@@ -149,9 +126,9 @@ public class GBuffer {
 				| GL3ES3.GL_STENCIL_BUFFER_BIT);
 	}
 
-	public void bindTexAlbedo() {
+	public void bindTexColor() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texAlbedo);
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texColor);
 	}
 	public void bindTexPosition() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();

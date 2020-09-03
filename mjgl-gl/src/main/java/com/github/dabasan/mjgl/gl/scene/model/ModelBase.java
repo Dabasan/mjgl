@@ -7,22 +7,20 @@ import java.util.List;
 
 import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.GBuffer;
 import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.texture.Texture;
 
 /**
- * Model
+ * Base class for models
  * 
  * @author Daba
  *
  */
-public class Model extends Node {
+public abstract class ModelBase extends Node {
 	private List<ModelBuffer> buffers;
 	private boolean propertyUpdated;
 
@@ -38,14 +36,14 @@ public class Model extends Node {
 		defaultTexture = texture;
 	}
 
-	public Model(List<ModelBuffer> buffers, FlipVOption option) {
+	public ModelBase(List<ModelBuffer> buffers, FlipVOption option) {
 		this.buffers = buffers;
 		propertyUpdated = false;
 
 		this.setTexureParameters();
 		this.generateBuffers(option);
 	}
-	public Model(String modelFilepath, FlipVOption option) throws IOException {
+	public ModelBase(String modelFilepath, FlipVOption option) throws IOException {
 		// Get the file extension.
 		int lastIndexOfDot = modelFilepath.lastIndexOf('.');
 		if (lastIndexOfDot == -1) {
@@ -84,14 +82,14 @@ public class Model extends Node {
 				continue;
 			}
 
-			GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+			GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 			texture.bind(gl);
 			gl.glGenerateMipmap(texture.getTarget());
-			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_MIN_FILTER,
-					GL2ES2.GL_LINEAR_MIPMAP_LINEAR);
-			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_MAG_FILTER, GL2ES2.GL_LINEAR);
-			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_WRAP_S, GL2ES2.GL_REPEAT);
-			texture.setTexParameteri(gl, GL2ES2.GL_TEXTURE_WRAP_T, GL2ES2.GL_REPEAT);
+			texture.setTexParameteri(gl, GL3ES3.GL_TEXTURE_MIN_FILTER,
+					GL3ES3.GL_LINEAR_MIPMAP_LINEAR);
+			texture.setTexParameteri(gl, GL3ES3.GL_TEXTURE_MAG_FILTER, GL3ES3.GL_LINEAR);
+			texture.setTexParameteri(gl, GL3ES3.GL_TEXTURE_WRAP_S, GL3ES3.GL_REPEAT);
+			texture.setTexParameteri(gl, GL3ES3.GL_TEXTURE_WRAP_T, GL3ES3.GL_REPEAT);
 		}
 	}
 	private void generateBuffers(FlipVOption option) {
@@ -228,44 +226,33 @@ public class Model extends Node {
 		}
 	}
 
+	protected boolean isPropertyUpdated() {
+		return propertyUpdated;
+	}
+	protected IntBuffer getVAOBuffers() {
+		return vaoBuffers;
+	}
+	protected IntBuffer getVBOIndexBuffers() {
+		return vboIndexBuffers;
+	}
+	protected IntBuffer getVBOPosBuffers() {
+		return vboPosBuffers;
+	}
+	protected IntBuffer getVBOUVBuffers() {
+		return vboUVBuffers;
+	}
+	protected IntBuffer getVBONormBuffers() {
+		return vboNormBuffers;
+	}
+	protected static Texture getDefaultTexture() {
+		return defaultTexture;
+	}
+
 	public int getNumBuffers() {
 		return buffers.size();
 	}
 
-	public void draw(ShaderProgram program, GBuffer gBuffer, String samplerName, int textureUnit) {
-		if (propertyUpdated == true) {
-			this.update();
-		}
-
-		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
-
-		int numBuffers = buffers.size();
-
-		if (gBuffer != null) {
-			gBuffer.enable();
-		}
-		program.enable();
-		for (int i = 0; i < numBuffers; i++) {
-			ModelBuffer buffer = buffers.get(i);
-			Texture texture = buffer.getTexture();
-			int countIndices = buffer.getCountIndices();
-
-			if (texture != null) {
-				program.setTexture(samplerName, textureUnit, texture);
-			} else {
-				program.setTexture(samplerName, textureUnit, defaultTexture);
-			}
-
-			gl.glBindVertexArray(vaoBuffers.get(i));
-			gl.glEnable(GL3ES3.GL_BLEND);
-			gl.glDrawElements(GL3ES3.GL_TRIANGLES, countIndices, GL3ES3.GL_UNSIGNED_INT, 0);
-			gl.glDisable(GL3ES3.GL_BLEND);
-			gl.glBindVertexArray(vaoBuffers.get(0));
-		}
-	}
-	public void draw(ShaderProgram program, GBuffer gBuffer) {
-		this.draw(program, gBuffer, "textureSampler", 0);
-	}
+	public abstract void draw(ShaderProgram program);
 
 	public void transfer(ShaderProgram program) {
 		if (propertyUpdated == true) {
@@ -289,7 +276,7 @@ public class Model extends Node {
 		}
 	}
 
-	public void transform(Matrix m) {
+	public ModelBase transform(Matrix m) {
 		super.transform(m);
 
 		for (var buffer : buffers) {
@@ -321,43 +308,57 @@ public class Model extends Node {
 		}
 
 		propertyUpdated = true;
+
+		return this;
 	}
-	public void translate(Vector translation) {
+	public ModelBase translate(Vector translation) {
 		super.translate(translation);
 
 		var mTranslation = Matrix.createTranslationMatrix(translation.getX(), translation.getY(),
 				translation.getZ());
 		this.transform(mTranslation);
+
+		return this;
 	}
-	public void rescale(Vector scale) {
+	public ModelBase rescale(Vector scale) {
 		super.rescale(scale);
 
 		var mScaling = Matrix.createScalingMatrix(scale.getX(), scale.getY(), scale.getZ());
 		this.transform(mScaling);
+
+		return this;
 	}
-	public void rotX(double th) {
+	public ModelBase rotX(double th) {
 		super.rotX(th);
 
 		var mRotX = Matrix.createRotationXMatrix(th);
 		this.transform(mRotX);
+
+		return this;
 	}
-	public void rotY(double th) {
+	public ModelBase rotY(double th) {
 		super.rotY(th);
 
 		var mRotY = Matrix.createRotationYMatrix(th);
 		this.transform(mRotY);
+
+		return this;
 	}
-	public void rotZ(double th) {
+	public ModelBase rotZ(double th) {
 		super.rotZ(th);
 
 		var mRotZ = Matrix.createRotationZMatrix(th);
 		this.transform(mRotZ);
+
+		return this;
 	}
-	public void rot(Vector axis, double th) {
+	public ModelBase rot(Vector axis, double th) {
 		super.rot(axis, th);
 
 		var mRot = Matrix.createRotationMatrix(axis.getX(), axis.getY(), axis.getZ(), th);
 		this.transform(mRot);
+
+		return this;
 	}
 
 	public int setTexture(int indexMaterial, Texture texture) {

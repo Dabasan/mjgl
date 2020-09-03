@@ -133,6 +133,12 @@ public class Mouse {
 		return reservoir.getCountReleasing(code.ordinal());
 	}
 
+	public int getCursorPosX() {
+		return currentCursorPosX;
+	}
+	public int getCursorPosY() {
+		return currentCursorPosY;
+	}
 	public int getCursorDiffX() {
 		return cursorDiffX;
 	}

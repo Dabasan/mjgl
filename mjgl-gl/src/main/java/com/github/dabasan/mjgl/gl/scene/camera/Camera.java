@@ -22,7 +22,7 @@ public class Camera extends Node implements IUpdatable {
 	public Camera() {
 		near = 1.0;
 		far = 1000.0;
-		aspect = (double) 640 / 480;
+		aspect = (double) 1280 / 720;
 
 		target = new Vector(0.0, 0.0, 0.0);
 		up = new Vector(0.0, 1.0, 0.0);

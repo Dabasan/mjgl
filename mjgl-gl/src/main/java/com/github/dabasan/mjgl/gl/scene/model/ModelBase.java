@@ -252,7 +252,10 @@ public abstract class ModelBase extends Node {
 		return buffers.size();
 	}
 
-	public abstract void draw(ShaderProgram program);
+	public abstract void draw(ShaderProgram program, String samplerName, int textureUnit);
+	public void draw(ShaderProgram program) {
+		this.draw(program, "textureSampler", 0);
+	}
 
 	public void transfer(ShaderProgram program) {
 		if (propertyUpdated == true) {

@@ -23,6 +23,7 @@ public class ForwardModel extends ModelBase {
 		super(modelFilepath, option);
 	}
 
+	@Override
 	public void draw(ShaderProgram program, String samplerName, int textureUnit) {
 		if (this.isPropertyUpdated() == true) {
 			this.update();
@@ -51,9 +52,5 @@ public class ForwardModel extends ModelBase {
 			gl.glDisable(GL3ES3.GL_BLEND);
 			gl.glBindVertexArray(vaoBuffers.get(0));
 		}
-	}
-	@Override
-	public void draw(ShaderProgram program) {
-		this.draw(program, "textureSampler", 0);
 	}
 }

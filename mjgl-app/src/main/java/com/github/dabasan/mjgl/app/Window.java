@@ -77,11 +77,15 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		this.getKeyboard().keyPressed(e.getKeyCode());
+		if (!e.isAutoRepeat()) {
+			this.getKeyboard().keyPressed(e.getKeyCode());
+		}
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
-		this.getKeyboard().keyReleased(e.getKeyCode());
+		if (!e.isAutoRepeat()) {
+			this.getKeyboard().keyReleased(e.getKeyCode());
+		}
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {

@@ -17,8 +17,8 @@ public class WindowSettings {
 
 	public WindowSettings() {
 		title = "Window";
-		windowWidth = 640;
-		windowHeight = 480;
+		windowWidth = 1280;
+		windowHeight = 720;
 		exitWhenDestroyed = false;
 		visible = true;
 		pointerVisible = true;

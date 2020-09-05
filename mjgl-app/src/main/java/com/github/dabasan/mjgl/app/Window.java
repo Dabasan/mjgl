@@ -1,9 +1,5 @@
 package com.github.dabasan.mjgl.app;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
-
-import com.github.dabasan.mjgl.input.Mouse;
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
 import com.jogamp.newt.event.MouseEvent;
@@ -75,11 +71,7 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 	@Override
 	public void update() {
-		Point cursorPos = MouseInfo.getPointerInfo().getLocation();
 
-		Mouse mouse = this.getMouse();
-		mouse.setCurrentCursorPos(cursorPos.x, cursorPos.y);
-		mouse.updateCursorDiff();
 	}
 
 	@Override

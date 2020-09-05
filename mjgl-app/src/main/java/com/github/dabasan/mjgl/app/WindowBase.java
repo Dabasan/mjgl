@@ -1,5 +1,8 @@
 package com.github.dabasan.mjgl.app;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,9 +118,14 @@ public class WindowBase implements GLEventListener {
 		keyboard.update();
 		mouse.update();
 
+		Point cursorPos = MouseInfo.getPointerInfo().getLocation();
+		mouse.setCurrentCursorPos(cursorPos.x, cursorPos.y);
+		mouse.updateCursorDiff();
+
 		GLLock.lock();
 
 		GL2ES2 gl = drawable.getGL().getGL2ES2();
+		gl.glBindFramebuffer(GL2ES2.GL_FRAMEBUFFER, 0);
 		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT
 				| GL2ES2.GL_STENCIL_BUFFER_BIT);
 		this.update();

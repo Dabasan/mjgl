@@ -22,6 +22,7 @@ public class GBuffer {
 	private int texColor;
 	private int texPosition;
 	private int texNormal;
+	private int rboDepth;
 
 	private int bufferWidth;
 	private int bufferHeight;
@@ -31,6 +32,7 @@ public class GBuffer {
 		this.bufferHeight = bufferHeight;
 
 		this.setupTextures();
+		this.setupRenderbuffer();
 		this.setupFramebuffer();
 	}
 	private void setupTextures() {
@@ -57,6 +59,18 @@ public class GBuffer {
 			gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
 		}
 	}
+	private void setupRenderbuffer() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		IntBuffer rbos = Buffers.newDirectIntBuffer(1);
+		gl.glGenRenderbuffers(rbos.capacity(), rbos);
+		rboDepth = rbos.get(0);
+
+		gl.glBindRenderbuffer(GL3ES3.GL_RENDERBUFFER, rboDepth);
+		gl.glRenderbufferStorage(GL3ES3.GL_RENDERBUFFER, GL3ES3.GL_DEPTH_COMPONENT, bufferWidth,
+				bufferHeight);
+		gl.glBindRenderbuffer(GL3ES3.GL_RENDERBUFFER, 0);
+	}
 	private void setupFramebuffer() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
@@ -71,6 +85,8 @@ public class GBuffer {
 				GL3ES3.GL_TEXTURE_2D, texPosition, 0);
 		gl.glFramebufferTexture2D(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_COLOR_ATTACHMENT2,
 				GL3ES3.GL_TEXTURE_2D, texNormal, 0);
+		gl.glFramebufferRenderbuffer(GL3ES3.GL_FRAMEBUFFER, GL3ES3.GL_DEPTH_ATTACHMENT,
+				GL3ES3.GL_RENDERBUFFER, rboDepth);
 
 		IntBuffer drawBuffers = Buffers.newDirectIntBuffer(new int[]{GL3ES3.GL_COLOR_ATTACHMENT0,
 				GL3ES3.GL_COLOR_ATTACHMENT1, GL3ES3.GL_COLOR_ATTACHMENT2});
@@ -90,9 +106,11 @@ public class GBuffer {
 		IntBuffer fbos = Buffers.newDirectIntBuffer(new int[]{fbo});
 		IntBuffer textures = Buffers
 				.newDirectIntBuffer(new int[]{texColor, texPosition, texNormal});
+		IntBuffer rbos = Buffers.newDirectIntBuffer(new int[]{rboDepth});
 
 		gl.glDeleteFramebuffers(fbos.capacity(), fbos);
 		gl.glDeleteTextures(textures.capacity(), textures);
+		gl.glDeleteRenderbuffers(rbos.capacity(), rbos);
 	}
 
 	public int getBufferWidth() {

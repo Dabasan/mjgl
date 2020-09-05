@@ -141,6 +141,7 @@ public class QuadTransferrerWithUV implements ITransferrer {
 		// Top left
 		uvBuffer.put(topLeftU);
 		uvBuffer.put(topLeftV);
+		uvBuffer.flip();
 
 		gl.glBindBuffer(GL3ES3.GL_ARRAY_BUFFER, vboPos);
 		gl.glBufferData(GL3ES3.GL_ARRAY_BUFFER, Buffers.SIZEOF_FLOAT * posBuffer.capacity(),

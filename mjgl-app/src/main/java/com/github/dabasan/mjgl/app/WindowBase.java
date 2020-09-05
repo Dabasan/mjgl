@@ -20,7 +20,7 @@ import com.jogamp.opengl.GLEventListener;
  * @author Daba
  *
  */
-public class WindowBase implements GLEventListener {
+public abstract class WindowBase implements GLEventListener {
 	private Logger logger = LoggerFactory.getLogger(WindowBase.class);
 
 	private WindowSettings settings;
@@ -134,6 +134,8 @@ public class WindowBase implements GLEventListener {
 
 		mouse.resetWheelRotations();
 	}
+
+	public abstract void fit();
 
 	public void init() {
 

@@ -7,7 +7,9 @@ import com.jogamp.newt.event.MouseListener;
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
+import com.jogamp.opengl.GL2ES2;
 import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.AnimatorBase;
 
 /**
@@ -72,6 +74,13 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	@Override
 	public void update() {
 
+	}
+
+	@Override
+	public void fit() {
+		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		gl.glBindFramebuffer(GL2ES2.GL_FRAMEBUFFER, 0);
+		gl.glViewport(0, 0, this.getWindow().getWidth(), this.getWindow().getHeight());
 	}
 
 	@Override

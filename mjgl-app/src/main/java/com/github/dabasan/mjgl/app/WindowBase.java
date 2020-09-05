@@ -135,7 +135,7 @@ public abstract class WindowBase implements GLEventListener {
 		mouse.resetWheelRotations();
 	}
 
-	public abstract void fit();
+	public abstract void enable();
 
 	public void init() {
 

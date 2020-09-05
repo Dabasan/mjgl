@@ -77,7 +77,7 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 
 	@Override
-	public void fit() {
+	public void enable() {
 		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
 		gl.glBindFramebuffer(GL2ES2.GL_FRAMEBUFFER, 0);
 		gl.glViewport(0, 0, this.getWindow().getWidth(), this.getWindow().getHeight());

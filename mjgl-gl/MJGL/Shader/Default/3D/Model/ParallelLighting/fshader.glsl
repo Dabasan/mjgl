@@ -32,7 +32,7 @@ struct Camera{
 uniform Camera camera;
 
 in vec2 vsOutUV;
-layout(location=0) out vec3 fsOutFactor;
+layout(location=0) out vec4 fsOutFactor;
 
 void main(){
     vec3 cameraDirection=normalize(camera.target-camera.position);
@@ -59,5 +59,5 @@ void main(){
         sumColorPostLighting+=colorPostLighting;
     }
 
-    fsOutFactor=sumColorPostLighting.xyz;
+    fsOutFactor=vec4(sumColorPostLighting.xyz,1.0);
 }

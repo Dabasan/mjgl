@@ -1,5 +1,8 @@
 package com.github.dabasan.mjgl.app;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+
 import com.github.dabasan.mjgl.input.Mouse;
 import com.jogamp.newt.event.KeyEvent;
 import com.jogamp.newt.event.KeyListener;
@@ -72,7 +75,11 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 	@Override
 	public void update() {
+		Point cursorPos = MouseInfo.getPointerInfo().getLocation();
 
+		Mouse mouse = this.getMouse();
+		mouse.setCurrentCursorPos(cursorPos.x, cursorPos.y);
+		mouse.updateCursorDiff();
 	}
 
 	@Override
@@ -93,7 +100,7 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		this.mouseMoved(e);
+		// this.mouseMoved(e);
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -105,18 +112,24 @@ public class Window extends WindowBase implements KeyListener, MouseListener {
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		/*
 		Mouse mouse = this.getMouse();
-
+		
 		mouse.setCurrentCursorPos(e.getX(), e.getY());
 		mouse.updateCursorDiff();
+		*/
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.getMouse().mousePressed(e.getButton());
+		if (!e.isAutoRepeat()) {
+			this.getMouse().mousePressed(e.getButton());
+		}
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		this.getMouse().mouseReleased(e.getButton());
+		if (!e.isAutoRepeat()) {
+			this.getMouse().mouseReleased(e.getButton());
+		}
 	}
 	@Override
 	public void mouseWheelMoved(MouseEvent e) {

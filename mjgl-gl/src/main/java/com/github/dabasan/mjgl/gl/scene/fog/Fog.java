@@ -42,10 +42,18 @@ public class Fog implements IUpdatable {
 	}
 
 	@Override
-	public void update(ShaderProgram program) {
+	public void update(ShaderProgram program, int index) {
 		program.enable();
-		program.setUniform("fog.start", start);
-		program.setUniform("fog.end", end);
-		program.setUniform("fog.color", color);
+		if (index < 0) {
+			program.setUniform("fog.start", start);
+			program.setUniform("fog.end", end);
+			program.setUniform("fog.color", color);
+		} else {
+			String strArray = "fogs" + "[" + index + "]";
+
+			program.setUniform(strArray + ".start", start);
+			program.setUniform(strArray + ".end", end);
+			program.setUniform(strArray + ".color", color);
+		}
 	}
 }

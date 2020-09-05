@@ -76,15 +76,28 @@ public class ParallelLight extends Node implements IUpdatable {
 	}
 
 	@Override
-	public void update(ShaderProgram program) {
+	public void update(ShaderProgram program, int index) {
 		program.enable();
-		program.setUniform("light.position", this.getPosition());
-		program.setUniform("light.target", target);
-		program.setUniform("light.colorAmbient", colorAmbient);
-		program.setUniform("light.colorDiffuse", colorDiffuse);
-		program.setUniform("light.colorSpecular", colorSpecular);
-		program.setUniform("light.powerAmbient", powerAmbient);
-		program.setUniform("light.powerDiffuse", powerDiffuse);
-		program.setUniform("light.powerSpecular", powerSpecular);
+		if (index < 0) {
+			program.setUniform("light.position", this.getPosition());
+			program.setUniform("light.target", target);
+			program.setUniform("light.colorAmbient", colorAmbient);
+			program.setUniform("light.colorDiffuse", colorDiffuse);
+			program.setUniform("light.colorSpecular", colorSpecular);
+			program.setUniform("light.powerAmbient", powerAmbient);
+			program.setUniform("light.powerDiffuse", powerDiffuse);
+			program.setUniform("light.powerSpecular", powerSpecular);
+		} else {
+			String strArray = "lights" + "[" + index + "]";
+
+			program.setUniform(strArray + ".position", this.getPosition());
+			program.setUniform(strArray + ".target", target);
+			program.setUniform(strArray + ".colorAmbient", colorAmbient);
+			program.setUniform(strArray + ".colorDiffuse", colorDiffuse);
+			program.setUniform(strArray + ".colorSpecular", colorSpecular);
+			program.setUniform(strArray + ".powerAmbient", powerAmbient);
+			program.setUniform(strArray + ".powerDiffuse", powerDiffuse);
+			program.setUniform(strArray + ".powerSpecular", powerSpecular);
+		}
 	}
 }

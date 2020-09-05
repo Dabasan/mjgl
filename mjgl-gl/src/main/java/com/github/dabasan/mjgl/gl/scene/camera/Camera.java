@@ -59,7 +59,7 @@ public class Camera extends Node implements IUpdatable {
 	}
 
 	@Override
-	public void update(ShaderProgram program) {
+	public void update(ShaderProgram program, int index) {
 
 	}
 }

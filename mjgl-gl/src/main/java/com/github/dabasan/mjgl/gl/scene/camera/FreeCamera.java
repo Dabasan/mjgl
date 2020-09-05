@@ -100,11 +100,11 @@ public class FreeCamera extends PerspectiveCamera {
 	}
 
 	@Override
-	public void update(ShaderProgram program) {
+	public void update(ShaderProgram program, int index) {
 		var direction = new Vector(angleV, angleH);
 		var target = this.getPosition().add(direction);
 		this.setTarget(target);
 
-		super.update(program);
+		super.update(program, index);
 	}
 }

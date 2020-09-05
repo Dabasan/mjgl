@@ -9,5 +9,5 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  *
  */
 public interface IUpdatable {
-	void update(ShaderProgram program);
+	void update(ShaderProgram program, int index);
 }

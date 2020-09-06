@@ -143,17 +143,4 @@ public class GBuffer {
 		gl.glClear(GL3ES3.GL_DEPTH_BUFFER_BIT | GL3ES3.GL_COLOR_BUFFER_BIT
 				| GL3ES3.GL_STENCIL_BUFFER_BIT);
 	}
-
-	public void bindTexColor() {
-		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texColor);
-	}
-	public void bindTexPosition() {
-		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texPosition);
-	}
-	public void bindTexNormal() {
-		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
-		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texNormal);
-	}
 }

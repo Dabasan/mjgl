@@ -22,9 +22,6 @@ struct ParallelLight{
     vec4 colorAmbient;
     vec4 colorDiffuse;
     vec4 colorSpecular;
-    float powerAmbient;
-    float powerDiffuse;
-    float powerSpecular;
 };
 uniform ParallelLight light;
 
@@ -44,9 +41,9 @@ void main(){
     float coefDiffuse=clamp(dot(vsOutNormal,-lightDirection),0.0,1.0);
     float coefSpecular=pow(clamp(dot(vsOutNormal,halfLE),0.0,1.0),2.0);
 
-    vec4 colorAmbient=vec4(light.colorAmbient*light.powerAmbient);
-    vec4 colorDiffuse=vec4(light.colorDiffuse*light.powerDiffuse*coefDiffuse);
-    vec4 colorSpecular=vec4(light.colorSpecular*light.powerSpecular*coefSpecular);
+    vec4 colorAmbient=vec4(light.colorAmbient);
+    vec4 colorDiffuse=vec4(light.colorDiffuse*coefDiffuse);
+    vec4 colorSpecular=vec4(light.colorSpecular*coefSpecular);
 
     vec4 colorPostLighting=colorAmbient+colorDiffuse+colorSpecular;
     colorPostLighting.a=1.0;

@@ -56,8 +56,8 @@ public class TextRenderer {
 			logger.error("Error", e);
 		}
 
-		windowWidth = 640;
-		windowHeight = 480;
+		windowWidth = 1280;
+		windowHeight = 720;
 	}
 
 	public void loadFont(InputStream is) throws IOException {

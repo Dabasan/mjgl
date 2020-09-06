@@ -12,6 +12,7 @@ import com.github.dabasan.mjgl.input.Mouse;
 import com.github.dabasan.mjgl.input.MouseCode;
 import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 
 /**
@@ -136,6 +137,13 @@ public abstract class WindowBase implements GLEventListener {
 	}
 
 	public abstract void enable();
+	public void clear() {
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
+		gl.glClear(GL3ES3.GL_COLOR_BUFFER_BIT | GL3ES3.GL_DEPTH_BUFFER_BIT
+				| GL3ES3.GL_STENCIL_BUFFER_BIT);
+	}
 
 	public void init() {
 

@@ -5,6 +5,7 @@ import java.nio.IntBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
@@ -15,7 +16,7 @@ import com.jogamp.opengl.GLContext;
  * @author Daba
  *
  */
-public class GBuffer {
+public class GBuffer implements IUpdatable {
 	private Logger logger = LoggerFactory.getLogger(GBuffer.class);
 
 	private int fbo;
@@ -142,5 +143,21 @@ public class GBuffer {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 		gl.glClear(GL3ES3.GL_DEPTH_BUFFER_BIT | GL3ES3.GL_COLOR_BUFFER_BIT
 				| GL3ES3.GL_STENCIL_BUFFER_BIT);
+	}
+
+	@Override
+	public void update(ShaderProgram program, int index) {
+		program.enable();
+		if (index < 0) {
+			program.setTexture("gBuffer.texColor", 0, GL3ES3.GL_TEXTURE_2D, texColor);
+			program.setTexture("gBuffer.texPosition", 1, GL3ES3.GL_TEXTURE_2D, texPosition);
+			program.setTexture("gBuffer.texNormal", 2, GL3ES3.GL_TEXTURE_2D, texNormal);
+		} else {
+			String strArray = "gBuffers" + "[" + index + "]";
+
+			program.setTexture(strArray + ".texColor", 0, GL3ES3.GL_TEXTURE_2D, texColor);
+			program.setTexture(strArray + ".texPosition", 1, GL3ES3.GL_TEXTURE_2D, texPosition);
+			program.setTexture(strArray + ".texNormal", 2, GL3ES3.GL_TEXTURE_2D, texNormal);
+		}
 	}
 }

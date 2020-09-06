@@ -2,7 +2,7 @@ package com.github.dabasan.mjgl.gl.scene.light;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
-import com.github.dabasan.mjgl.gl.scene.IUpdatable;
+import com.github.dabasan.mjgl.gl.IUpdatable;
 import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
@@ -22,6 +22,8 @@ public class ParallelLight extends Node implements IUpdatable {
 	private double powerSpecular;
 
 	public ParallelLight() {
+		this.setPosition(new Vector(1000.0, 1000.0, 1000.0));
+
 		target = new Vector(0.0, 0.0, 0.0);
 		colorAmbient = Color.WHITE;
 		colorDiffuse = Color.WHITE;

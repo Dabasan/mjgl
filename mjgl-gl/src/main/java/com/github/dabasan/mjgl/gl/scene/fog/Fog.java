@@ -1,7 +1,7 @@
 package com.github.dabasan.mjgl.gl.scene.fog;
 
 import com.github.dabasan.mjgl.gl.Color;
-import com.github.dabasan.mjgl.gl.scene.IUpdatable;
+import com.github.dabasan.mjgl.gl.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**

@@ -1,4 +1,4 @@
-package com.github.dabasan.mjgl.gl.scene;
+package com.github.dabasan.mjgl.gl;
 
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 

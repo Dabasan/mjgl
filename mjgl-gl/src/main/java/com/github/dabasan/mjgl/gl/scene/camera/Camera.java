@@ -1,7 +1,7 @@
 package com.github.dabasan.mjgl.gl.scene.camera;
 
 import com.github.dabasan.ejml_3dtools.Vector;
-import com.github.dabasan.mjgl.gl.scene.IUpdatable;
+import com.github.dabasan.mjgl.gl.IUpdatable;
 import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 

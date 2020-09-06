@@ -3,7 +3,6 @@
 struct GBuffer{
     sampler2D texColor;
     sampler2D texPosition;
-    sampler2D texUV;
     sampler2D texNormal;
 };
 uniform GBuffer gBuffer;

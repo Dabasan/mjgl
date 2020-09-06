@@ -39,7 +39,7 @@ public class FactorBuffer {
 		texture = textures.get(0);
 
 		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texture);
-		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB32F, bufferWidth, bufferHeight, 0,
+		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGB16F, bufferWidth, bufferHeight, 0,
 				GL3ES3.GL_RGB, GL3ES3.GL_FLOAT, null);
 		gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MAG_FILTER, GL3ES3.GL_NEAREST);
 		gl.glTexParameteri(GL3ES3.GL_TEXTURE_2D, GL3ES3.GL_TEXTURE_MIN_FILTER, GL3ES3.GL_NEAREST);

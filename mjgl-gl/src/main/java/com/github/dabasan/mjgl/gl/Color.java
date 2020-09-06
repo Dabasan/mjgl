@@ -6,7 +6,7 @@ package com.github.dabasan.mjgl.gl;
  * @author Daba
  *
  */
-public class Color {
+public final class Color {
 	private float r;
 	private float g;
 	private float b;
@@ -44,6 +44,11 @@ public class Color {
 		this.a = c.a;
 	}
 
+	@Override
+	public String toString() {
+		return "(" + r + "," + g + "," + b + "," + a + ")";
+	}
+
 	public float getR() {
 		return r;
 	}
@@ -57,40 +62,27 @@ public class Color {
 		return a;
 	}
 
-	public void set(float r, float g, float b, float a) {
+	private void set(float r, float g, float b, float a) {
 		this.r = r;
 		this.g = g;
 		this.b = b;
 		this.a = a;
 	}
-	public void setR(float r) {
-		this.r = r;
-	}
-	public void setG(float g) {
-		this.g = g;
-	}
-	public void setB(float b) {
-		this.b = b;
-	}
-	public void setA(float a) {
-		this.a = a;
-	}
-	public void set(int r, int g, int b, int a) {
+	private void set(int r, int g, int b, int a) {
 		this.r = r / 255.0f;
 		this.g = g / 255.0f;
 		this.b = b / 255.0f;
 		this.a = a / 255.0f;
 	}
-	public void setR(int r) {
-		this.r = r / 255.0f;
-	}
-	public void setG(int g) {
-		this.g = g / 255.0f;
-	}
-	public void setB(int b) {
-		this.b = b / 255.0f;
-	}
-	public void setA(int a) {
-		this.a = a / 255.0f;
+
+	/**
+	 * Scales a color. Returns a new instance.
+	 * 
+	 * @param scale
+	 *            Scale
+	 * @return New instance of Color
+	 */
+	public Color scale(float scale) {
+		return new Color(r * scale, g * scale, b * scale, a * scale);
 	}
 }

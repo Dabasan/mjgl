@@ -27,7 +27,7 @@ in vec2 vsOutUV;
 layout(location=0) out vec4 fsOutFactor;
 
 void main(){
-    vec3 vertexPosition=texture(gBuffer.texPosition,vsOutUV);
+    vec3 vertexPosition=texture(gBuffer.texPosition,vsOutUV).rgb;
     float linearPos=length(camera.position-vertexPosition);
     float fogFactor=clamp((fog.end-linearPos)/(fog.end-fog.start),0.0,1.0);
 

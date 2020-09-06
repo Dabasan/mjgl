@@ -10,7 +10,7 @@ import com.github.dabasan.mjgl.input.KeyCode;
 import com.github.dabasan.mjgl.input.Keyboard;
 import com.github.dabasan.mjgl.input.Mouse;
 import com.github.dabasan.mjgl.input.MouseCode;
-import com.jogamp.opengl.GL2ES2;
+import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 
@@ -81,17 +81,17 @@ public abstract class WindowBase implements GLEventListener {
 	public void init(GLAutoDrawable drawable) {
 		GLLock.lock();
 
-		GL2ES2 gl = drawable.getGL().getGL2ES2();
+		GL3ES3 gl = drawable.getGL().getGL3ES3();
 
 		// Depth test
-		gl.glEnable(GL2ES2.GL_DEPTH_TEST);
-		gl.glDepthFunc(GL2ES2.GL_LESS);
+		gl.glEnable(GL3ES3.GL_DEPTH_TEST);
+		gl.glDepthFunc(GL3ES3.GL_LESS);
 		// Cull face
-		gl.glEnable(GL2ES2.GL_CULL_FACE);
-		gl.glCullFace(GL2ES2.GL_BACK);
+		gl.glEnable(GL3ES3.GL_CULL_FACE);
+		gl.glCullFace(GL3ES3.GL_BACK);
 		// Blend
-		gl.glEnable(GL2ES2.GL_BLEND);
-		gl.glBlendFunc(GL2ES2.GL_SRC_ALPHA, GL2ES2.GL_ONE_MINUS_SRC_ALPHA);
+		gl.glEnable(GL3ES3.GL_BLEND);
+		gl.glBlendFunc(GL3ES3.GL_SRC_ALPHA, GL3ES3.GL_ONE_MINUS_SRC_ALPHA);
 
 		this.init();
 
@@ -124,10 +124,10 @@ public abstract class WindowBase implements GLEventListener {
 
 		GLLock.lock();
 
-		GL2ES2 gl = drawable.getGL().getGL2ES2();
-		gl.glBindFramebuffer(GL2ES2.GL_FRAMEBUFFER, 0);
-		gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT | GL2ES2.GL_DEPTH_BUFFER_BIT
-				| GL2ES2.GL_STENCIL_BUFFER_BIT);
+		GL3ES3 gl = drawable.getGL().getGL3ES3();
+		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
+		gl.glClear(GL3ES3.GL_COLOR_BUFFER_BIT | GL3ES3.GL_DEPTH_BUFFER_BIT
+				| GL3ES3.GL_STENCIL_BUFFER_BIT);
 		this.update();
 
 		GLLock.unlock();

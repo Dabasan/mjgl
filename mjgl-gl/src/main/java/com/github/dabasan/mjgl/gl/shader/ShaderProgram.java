@@ -13,7 +13,7 @@ import com.github.dabasan.ejml_3dtools.Matrix;
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL2ES2;
+import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -75,103 +75,103 @@ public class ShaderProgram {
 	}
 
 	public void enable() {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 		gl.glUseProgram(programID);
 	}
 
 	// int
 	public void setUniform(String name, int value) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform1i(location, value);
 	}
 	public void setUniform(String name, int value0, int value1) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform2i(location, value0, value1);
 	}
 	public void setUniform(String name, int value0, int value1, int value2) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform3i(location, value0, value1, value2);
 	}
 	public void setUniform(String name, int value0, int value1, int value2, int value3) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform4i(location, value0, value1, value2, value3);
 	}
 	// float
 	public void setUniform(String name, float value) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform1f(location, value);
 	}
 	public void setUniform(String name, float value0, float value1) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform2f(location, value0, value1);
 	}
 	public void setUniform(String name, float value0, float value1, float value2) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform3f(location, value0, value1, value2);
 	}
 	public void setUniform(String name, float value0, float value1, float value2, float value3) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform4f(location, value0, value1, value2, value3);
 	}
 	// double
 	public void setUniform(String name, double value) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform1f(location, (float) value);
 	}
 	public void setUniform(String name, double value0, double value1) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform2f(location, (float) value0, (float) value1);
 	}
 	public void setUniform(String name, double value0, double value1, double value2) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform3f(location, (float) value0, (float) value1, (float) value2);
 	}
 	public void setUniform(String name, double value0, double value1, double value2,
 			double value3) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform4f(location, (float) value0, (float) value1, (float) value2, (float) value3);
 	}
 	// Vector
 	public void setUniform(String name, Vector value) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform3f(location, value.getXFloat(), value.getYFloat(), value.getZFloat());
 	}
 	// Color
 	public void setUniform(String name, Color value) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
 		gl.glUniform4f(location, value.getR(), value.getG(), value.getB(), value.getA());
 	}
 	// Matrix
 	public void setUniform(String name, Matrix value, boolean transpose) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		FloatBuffer buffer = Buffers.newDirectFloatBuffer(16);
 		double[] arr = value.toArray();
@@ -185,18 +185,18 @@ public class ShaderProgram {
 
 	// Texture
 	public void setTexture(String name, int textureUnit, Texture texture) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
-		gl.glActiveTexture(GL2ES2.GL_TEXTURE0 + textureUnit);
+		gl.glActiveTexture(GL3ES3.GL_TEXTURE0 + textureUnit);
 		texture.bind(gl);
 		gl.glUniform1i(location, textureUnit);
 	}
 	public void setTexture(String name, int textureUnit, int textureTarget, int texture) {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		int location = gl.glGetUniformLocation(programID, name);
-		gl.glActiveTexture(GL2ES2.GL_TEXTURE0 + textureUnit);
+		gl.glActiveTexture(GL3ES3.GL_TEXTURE0 + textureUnit);
 		gl.glBindTexture(textureTarget, texture);
 		gl.glUniform1i(location, textureUnit);
 	}

@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jogamp.common.nio.Buffers;
-import com.jogamp.opengl.GL2ES2;
+import com.jogamp.opengl.GL3ES3;
 import com.jogamp.opengl.GLContext;
 
 /**
@@ -26,10 +26,10 @@ class ShaderFunctions {
 
 	public static int createProgram(InputStream isVShader, InputStream isFShader)
 			throws IOException {
-		GL2ES2 gl = GLContext.getCurrentGL().getGL2ES2();
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		int vShaderID = gl.glCreateShader(GL2ES2.GL_VERTEX_SHADER);
-		int fShaderID = gl.glCreateShader(GL2ES2.GL_FRAGMENT_SHADER);
+		int vShaderID = gl.glCreateShader(GL3ES3.GL_VERTEX_SHADER);
+		int fShaderID = gl.glCreateShader(GL3ES3.GL_FRAGMENT_SHADER);
 
 		// Load vertex shader.
 		var vShaderCode = new ArrayList<String>();
@@ -78,8 +78,8 @@ class ShaderFunctions {
 		gl.glCompileShader(vShaderID);
 
 		// Check vertex shader.
-		gl.glGetShaderiv(vShaderID, GL2ES2.GL_COMPILE_STATUS, result);
-		if (result.get(0) == GL2ES2.GL_FALSE) {
+		gl.glGetShaderiv(vShaderID, GL3ES3.GL_COMPILE_STATUS, result);
+		if (result.get(0) == GL3ES3.GL_FALSE) {
 			String errMessage = getShaderInfoLog(gl, vShaderID);
 
 			logger.error("Vertex shader compilation failed.");
@@ -93,8 +93,8 @@ class ShaderFunctions {
 		gl.glCompileShader(fShaderID);
 
 		// Check fragment shader.
-		gl.glGetShaderiv(fShaderID, GL2ES2.GL_COMPILE_STATUS, result);
-		if (result.get(0) == GL2ES2.GL_FALSE) {
+		gl.glGetShaderiv(fShaderID, GL3ES3.GL_COMPILE_STATUS, result);
+		if (result.get(0) == GL3ES3.GL_FALSE) {
 			String errMessage = getShaderInfoLog(gl, fShaderID);
 
 			logger.error("Fragment shader compilation failed.");
@@ -110,8 +110,8 @@ class ShaderFunctions {
 		gl.glLinkProgram(programID);
 
 		// Check program.
-		gl.glGetProgramiv(programID, GL2ES2.GL_LINK_STATUS, result);
-		if (result.get(0) == GL2ES2.GL_FALSE) {
+		gl.glGetProgramiv(programID, GL3ES3.GL_LINK_STATUS, result);
+		if (result.get(0) == GL3ES3.GL_FALSE) {
 			String errMessage = getProgramInfoLog(gl, programID);
 
 			logger.error("Program link failed.");
@@ -127,9 +127,9 @@ class ShaderFunctions {
 
 		return programID;
 	}
-	private static String getShaderInfoLog(GL2ES2 gl, int shaderID) {
+	private static String getShaderInfoLog(GL3ES3 gl, int shaderID) {
 		IntBuffer infoLogLength = Buffers.newDirectIntBuffer(1);
-		gl.glGetShaderiv(shaderID, GL2ES2.GL_INFO_LOG_LENGTH, infoLogLength);
+		gl.glGetShaderiv(shaderID, GL3ES3.GL_INFO_LOG_LENGTH, infoLogLength);
 
 		ByteBuffer buffer = Buffers.newDirectByteBuffer(infoLogLength.get(0));
 		gl.glGetShaderInfoLog(shaderID, infoLogLength.get(0), null, buffer);
@@ -140,9 +140,9 @@ class ShaderFunctions {
 
 		return new String(arrBytes);
 	}
-	private static String getProgramInfoLog(GL2ES2 gl, int programID) {
+	private static String getProgramInfoLog(GL3ES3 gl, int programID) {
 		IntBuffer infoLogLength = Buffers.newDirectIntBuffer(1);
-		gl.glGetProgramiv(programID, GL2ES2.GL_INFO_LOG_LENGTH, infoLogLength);
+		gl.glGetProgramiv(programID, GL3ES3.GL_INFO_LOG_LENGTH, infoLogLength);
 
 		ByteBuffer buffer = Buffers.newDirectByteBuffer(infoLogLength.get(0));
 		gl.glGetProgramInfoLog(programID, infoLogLength.get(0), null, buffer);

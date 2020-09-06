@@ -7,11 +7,15 @@ struct Camera{
     vec3 target;
     mat4 vp;
 };
+uniform Camera camera;
+
 struct Fog{
     float start;
     float end;
     vec4 color;
 };
+uniform Fog fog;
+
 struct ParallelLight{
     vec3 position;
     vec3 target;
@@ -22,10 +26,8 @@ struct ParallelLight{
     float powerDiffuse;
     float powerSpecular;
 };
-
-uniform Camera camera;
-uniform Fog fog;
 uniform ParallelLight light;
+
 uniform sampler2D textureSampler;
 
 in vec3 vsOutPosition;

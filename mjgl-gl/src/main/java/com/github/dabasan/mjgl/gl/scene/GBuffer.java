@@ -1,10 +1,11 @@
-package com.github.dabasan.mjgl.gl;
+package com.github.dabasan.mjgl.gl.scene;
 
 import java.nio.IntBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.dabasan.mjgl.gl.IUpdatable;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.jogamp.common.nio.Buffers;
 import com.jogamp.opengl.GL3ES3;

@@ -8,14 +8,14 @@ struct GBuffer{
 uniform GBuffer gBuffer;
 
 const int MAX_NUM_LIGHTS=4;
-struct ParallelLight{
+struct DirectionalLight{
     vec3 position;
     vec3 target;
     vec4 colorAmbient;
     vec4 colorDiffuse;
     vec4 colorSpecular;
 };
-uniform ParallelLight lights[MAX_NUM_LIGHTS];
+uniform DirectionalLight directionalLights[MAX_NUM_LIGHTS];
 uniform int numLights;
 
 struct Camera{
@@ -38,16 +38,16 @@ void main(){
 
     int boundNumLights=min(numLights,MAX_NUM_LIGHTS);
     for(int i=0;i<boundNumLights;i++){
-        vec3 lightDirection=normalize(lights[i].target-lights[i].position);
+        vec3 lightDirection=normalize(directionalLights[i].target-directionalLights[i].position);
 
         vec3 halfLE=-normalize(cameraDirection+lightDirection);
 
         float coefDiffuse=clamp(dot(fragNormal,-lightDirection),0.0,1.0);
         float coefSpecular=pow(clamp(dot(fragNormal,halfLE),0.0,1.0),2.0);
 
-        vec4 colorAmbient=vec4(lights[i].colorAmbient);
-        vec4 colorDiffuse=vec4(lights[i].colorDiffuse*coefDiffuse);
-        vec4 colorSpecular=vec4(lights[i].colorSpecular*coefSpecular);
+        vec4 colorAmbient=vec4(directionalLights[i].colorAmbient);
+        vec4 colorDiffuse=vec4(directionalLights[i].colorDiffuse*coefDiffuse);
+        vec4 colorSpecular=vec4(directionalLights[i].colorSpecular*coefSpecular);
 
         vec4 colorPostLighting=colorAmbient+colorDiffuse+colorSpecular;
         colorPostLighting.a=1.0;

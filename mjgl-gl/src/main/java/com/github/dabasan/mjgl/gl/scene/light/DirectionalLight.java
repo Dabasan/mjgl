@@ -7,18 +7,18 @@ import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 
 /**
- * Light
+ * Directional light
  * 
  * @author Daba
  *
  */
-public class ParallelLight extends Node implements IUpdatable {
+public class DirectionalLight extends Node implements IUpdatable {
 	private Vector target;
 	private Color colorAmbient;
 	private Color colorDiffuse;
 	private Color colorSpecular;
 
-	public ParallelLight() {
+	public DirectionalLight() {
 		this.setPosition(new Vector(1000.0, 1000.0, 1000.0));
 
 		target = new Vector(0.0, 0.0, 0.0);
@@ -57,13 +57,13 @@ public class ParallelLight extends Node implements IUpdatable {
 	public void update(ShaderProgram program, int index) {
 		program.enable();
 		if (index < 0) {
-			program.setUniform("light.position", this.getPosition());
-			program.setUniform("light.target", target);
-			program.setUniform("light.colorAmbient", colorAmbient);
-			program.setUniform("light.colorDiffuse", colorDiffuse);
-			program.setUniform("light.colorSpecular", colorSpecular);
+			program.setUniform("directionalLight.position", this.getPosition());
+			program.setUniform("directionalLight.target", target);
+			program.setUniform("directionalLight.colorAmbient", colorAmbient);
+			program.setUniform("directionalLight.colorDiffuse", colorDiffuse);
+			program.setUniform("directionalLight.colorSpecular", colorSpecular);
 		} else {
-			String strArray = "lights" + "[" + index + "]";
+			String strArray = "directionalLights" + "[" + index + "]";
 
 			program.setUniform(strArray + ".position", this.getPosition());
 			program.setUniform(strArray + ".target", target);

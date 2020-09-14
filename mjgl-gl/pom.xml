@@ -31,12 +31,12 @@
 		<dependency>
 			<groupId>com.github.dabasan</groupId>
 			<artifactId>ejml-3dtools</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.dabasan</groupId>
 			<artifactId>jxm-bd1</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.1-rc2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.dabasan</groupId>

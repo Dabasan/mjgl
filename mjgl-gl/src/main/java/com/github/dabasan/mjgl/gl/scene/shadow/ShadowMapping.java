@@ -173,6 +173,18 @@ public class ShadowMapping {
 		gl.glDeleteTextures(texsShadow.capacity(), texsShadow);
 	}
 
+	public void resizeShadowTexture(int shadowTextureWidth, int shadowTextureHeight) {
+		this.shadowTextureWidth = shadowTextureWidth;
+		this.shadowTextureHeight = shadowTextureHeight;
+
+		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
+
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, texsShadow.get(0));
+		gl.glTexImage2D(GL3ES3.GL_TEXTURE_2D, 0, GL3ES3.GL_RGBA, shadowTextureWidth,
+				shadowTextureHeight, 0, GL3ES3.GL_RGBA, GL3ES3.GL_UNSIGNED_BYTE, null);
+		gl.glBindTexture(GL3ES3.GL_TEXTURE_2D, 0);
+	}
+
 	public void setPrograms(ShaderProgram pgDepth, ShaderProgram pgShadow,
 			ShaderProgram pgVisualizer) {
 		this.pgDepth = pgDepth;

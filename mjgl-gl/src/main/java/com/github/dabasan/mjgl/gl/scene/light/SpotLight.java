@@ -2,8 +2,6 @@ package com.github.dabasan.mjgl.gl.scene.light;
 
 import com.github.dabasan.ejml_3dtools.Vector;
 import com.github.dabasan.mjgl.gl.Color;
-import com.github.dabasan.mjgl.gl.IUpdatable;
-import com.github.dabasan.mjgl.gl.scene.Node;
 import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
 import com.github.dabasan.mjgl.math.MathFunctions;
 
@@ -13,36 +11,27 @@ import com.github.dabasan.mjgl.math.MathFunctions;
  * @author Daba
  *
  */
-public class SpotLight extends Node implements IUpdatable {
-	private Vector target;
+public class SpotLight extends LightBase {
 	private float k0;
 	private float k1;
 	private float k2;
 	private float phi;
 	private float theta;
 	private float falloff;
-	private Color colorDiffuse;
-	private Color colorSpecular;
 	private float colorClampMin;
 	private float colorClampMax;
 
 	public SpotLight() {
-		target = new Vector(50.0, 50.0, 50.0);
 		k0 = 0.0f;
 		k1 = 0.01f;
 		k2 = 0.0f;
 		phi = (float) MathFunctions.convDegToRad(50.0);
 		theta = (float) MathFunctions.convDegToRad(30.0);
 		falloff = 1.0f;
-		colorDiffuse = Color.WHITE;
-		colorSpecular = Color.WHITE;
 		colorClampMin = 0.0f;
 		colorClampMax = 1.0f;
 	}
 
-	public Vector getTarget() {
-		return target;
-	}
 	public float getK0() {
 		return k0;
 	}
@@ -61,12 +50,6 @@ public class SpotLight extends Node implements IUpdatable {
 	public float getFalloff() {
 		return falloff;
 	}
-	public Color getColorDiffuse() {
-		return colorDiffuse;
-	}
-	public Color getColorSpecular() {
-		return colorSpecular;
-	}
 	public float getColorClampMin() {
 		return colorClampMin;
 	}
@@ -74,9 +57,6 @@ public class SpotLight extends Node implements IUpdatable {
 		return colorClampMax;
 	}
 
-	public void setTarget(Vector target) {
-		this.target = target;
-	}
 	public void setK0(float k0) {
 		this.k0 = k0;
 	}
@@ -95,12 +75,6 @@ public class SpotLight extends Node implements IUpdatable {
 	public void setFalloff(float falloff) {
 		this.falloff = falloff;
 	}
-	public void setColorDiffuse(Color colorDiffuse) {
-		this.colorDiffuse = colorDiffuse;
-	}
-	public void setColorSpecular(Color colorSpecular) {
-		this.colorSpecular = colorSpecular;
-	}
 	public void setColorClampMin(float colorClampMin) {
 		this.colorClampMin = colorClampMin;
 	}
@@ -110,6 +84,10 @@ public class SpotLight extends Node implements IUpdatable {
 
 	@Override
 	public void update(ShaderProgram program, int index) {
+		Vector target = this.getTarget();
+		Color colorDiffuse = this.getColorDiffuse();
+		Color colorSpecular = this.getColorSpecular();
+
 		program.enable();
 		if (index < 0) {
 			program.setUniform("spotLight.position", this.getPosition());

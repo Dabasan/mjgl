@@ -29,7 +29,8 @@ import com.jogamp.opengl.GLContext;
 public class ShadowMapping {
 	private Logger logger = LoggerFactory.getLogger(ShadowMapping.class);
 
-	private int numMaxLights;
+	public static final int MAX_NUM_LIGHTS = 16;
+	private int numLights;
 
 	private int depthTextureWidth;
 	private int depthTextureHeight;
@@ -50,9 +51,13 @@ public class ShadowMapping {
 	private ShaderProgram pgShadow;
 	private ShaderProgram pgVisualizer;
 
-	public ShadowMapping(int numMaxLights, int depthTextureWidth, int depthTextureHeight,
+	public ShadowMapping(int numLights, int depthTextureWidth, int depthTextureHeight,
 			int shadowTextureWidth, int shadowTextureHeight) {
-		this.numMaxLights = numMaxLights;
+		if (numLights > MAX_NUM_LIGHTS) {
+			this.numLights = MAX_NUM_LIGHTS;
+		} else {
+			this.numLights = numLights;
+		}
 
 		this.depthTextureWidth = depthTextureHeight;
 		this.depthTextureHeight = depthTextureHeight;
@@ -79,7 +84,7 @@ public class ShadowMapping {
 	private void setupDepthTextures() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		texsDepth = Buffers.newDirectIntBuffer(numMaxLights);
+		texsDepth = Buffers.newDirectIntBuffer(numLights);
 		gl.glGenTextures(texsDepth.capacity(), texsDepth);
 
 		for (int i = 0; i < texsDepth.capacity(); i++) {
@@ -100,7 +105,7 @@ public class ShadowMapping {
 	private void setupDepthFramebuffers() {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
-		fbosDepth = Buffers.newDirectIntBuffer(numMaxLights);
+		fbosDepth = Buffers.newDirectIntBuffer(numLights);
 		gl.glGenFramebuffers(fbosDepth.capacity(), fbosDepth);
 
 		for (int i = 0; i < fbosDepth.capacity(); i++) {
@@ -199,12 +204,12 @@ public class ShadowMapping {
 	public void update(List<LightBase> lights, List<Model> depthModels, List<Model> shadowModels) {
 		this.transferLightProperties(lights);
 
-		int bound = Math.min(numMaxLights, lights.size());
+		int bound = Math.min(numLights, lights.size());
 		this.generateDepthTextures(bound, depthModels);
 		this.generateShadowFactors(bound, shadowModels);
 	}
 	private void transferLightProperties(List<LightBase> lights) {
-		int bound = Math.min(numMaxLights, lights.size());
+		int bound = Math.min(numLights, lights.size());
 		for (int i = 0; i < bound; i++) {
 			var light = lights.get(i);
 
@@ -280,7 +285,7 @@ public class ShadowMapping {
 	}
 
 	public int visualizeDepthTexture(int index, ScreenBase screen) {
-		if (!(0 <= index && index < numMaxLights)) {
+		if (!(0 <= index && index < numLights)) {
 			return -1;
 		}
 

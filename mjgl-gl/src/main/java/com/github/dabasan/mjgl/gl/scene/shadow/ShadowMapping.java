@@ -218,7 +218,7 @@ public class ShadowMapping {
 
 		int bound = Math.min(numLights, lights.size());
 		this.generateDepthTextures(bound, depthModels);
-		this.generateShadowFactors(bound, shadowModels);
+		this.generateShadowTexture(bound, shadowModels);
 	}
 	private void transferLightProperties(List<LightBase> lights) {
 		int bound = Math.min(numLights, lights.size());
@@ -277,7 +277,7 @@ public class ShadowMapping {
 			gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
 		}
 	}
-	private void generateShadowFactors(int bound, List<Model> models) {
+	private void generateShadowTexture(int bound, List<Model> models) {
 		GL3ES3 gl = GLContext.getCurrentGL().getGL3ES3();
 
 		pgShadow.enable();
@@ -294,6 +294,10 @@ public class ShadowMapping {
 			model.draw(pgShadow, "textureSampler", 0);
 		}
 		gl.glBindFramebuffer(GL3ES3.GL_FRAMEBUFFER, 0);
+	}
+
+	public int getShadowTexture() {
+		return texsShadow.get(0);
 	}
 
 	public int visualizeDepthTexture(int index, ScreenBase screen) {

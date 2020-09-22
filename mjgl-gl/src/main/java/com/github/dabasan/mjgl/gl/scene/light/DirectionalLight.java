@@ -11,8 +11,21 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  *
  */
 public class DirectionalLight extends LightBase {
+	// Following variables are used for shadow mapping.
+	private float size;
+
 	public DirectionalLight() {
 		this.setPosition(new Vector(1000.0, 1000.0, 1000.0));
+
+		size = 10.0f;
+	}
+
+	public float getSize() {
+		return size;
+	}
+
+	public void setSize(float size) {
+		this.size = size;
 	}
 
 	@Override

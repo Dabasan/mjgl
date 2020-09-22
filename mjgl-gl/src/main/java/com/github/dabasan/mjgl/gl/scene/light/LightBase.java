@@ -12,7 +12,7 @@ import com.github.dabasan.mjgl.gl.shader.ShaderProgram;
  * @author Daba
  *
  */
-class LightBase extends Node implements IUpdatable {
+public class LightBase extends Node implements IUpdatable {
 	private Vector target;
 	private Color colorAmbient;
 	private Color colorDiffuse;
